@@ -193,14 +193,16 @@ def main():
         run_speedtest(module)
     except speedtest.NoMatchedServers:
         module.fail_json(msg='No matched servers: %s' % ', '.join('%s' % s for s in module.params['servers']))
-    except (speedtest.ConfigRetrievalError,) + speedtest.HTTP_ERRORS:
+    except speedtest.ConfigRetrievalError:
         module.fail_json(msg='Cannot retrieve speedtest configuration', exception=traceback.format_exc())
-    except (speedtest.ServersRetrievalError,) + speedtest.HTTP_ERRORS:
+    except speedtest.ServersRetrievalError:
         module.fail_json(msg='Cannot retrieve speedtest server list', exception=traceback.format_exc())
-    except speedtest.SpeedtestException as e:
+    except Exception as e:
         msg = '%s' % e
         if not msg:
             msg = '%r' % e
+        if not isinstance(e, speedtest.SpeedtestException):
+            msg = 'Unknown Error: %s' % msg
         module.fail_json(msg=msg)
 
 
