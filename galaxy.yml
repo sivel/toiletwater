@@ -1,0 +1,15 @@
+namespace: "sivel"
+name: "toiletwater"
+version: "0.0.1"
+readme: "README.md"
+authors:
+    - "sivel <matt@sivel.net>"
+license:
+    - "GPLv3"
+tags:
+    - sivel
+    - toiletwater
+    - awesome
+    - sweet
+    - amazing
+repository: "https://www.github.com/sivel/toiletwater"
