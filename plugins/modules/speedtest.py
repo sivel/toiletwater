@@ -25,6 +25,7 @@ options:
         description:
           - List of servers to exclude from testing
         required: false
+        type: list
     pre_allocate:
         default: true
         description:
@@ -42,6 +43,7 @@ options:
         description:
           - List of servers to limit for testing
         required: false
+        type: list
     share:
         default: false
         description:
@@ -52,10 +54,12 @@ options:
         description:
           - Source IP address to bind to
         required: false
+        type: str
     timeout:
         default: 10
         description:
           - HTTP timeout in seconds
+        type: int
     upload:
         default: true
         description:
