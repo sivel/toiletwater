@@ -7,11 +7,12 @@ __metaclass__ = type
 
 import copy
 
-from collections import MutableMapping
+
 from functools import partial
 
 from ansible.errors import AnsibleFilterError
 from ansible.module_utils._text import to_text
+from ansible.module_utils.common._collections_compat import MutableMapping
 from ansible.module_utils.six import string_types
 from ansible.module_utils.six.moves import configparser, StringIO
 
