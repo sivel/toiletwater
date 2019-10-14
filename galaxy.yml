@@ -5,7 +5,7 @@ readme: "README.md"
 authors:
     - "sivel <matt@sivel.net>"
 license:
-    - "GPLv3+"
+    - "GPL-3.0-or-later"
 license_file: "LICENSE"
 tags:
     - sivel
