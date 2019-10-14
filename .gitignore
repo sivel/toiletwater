@@ -104,3 +104,4 @@ venv.bak/
 .mypy_cache/
 
 tests/output/
+*.tar.gz
