@@ -11,12 +11,9 @@ matrix:
       install:
         - pip install git+https://github.com/ansible/ansible.git@devel#egg=ansible
 
-install:
-  - ls -al
+script:
   - mkdir -p ~/.ansible/collections/ansible_collections/sivel
   - mv $(PWD) ~/.ansible/collections/ansible_collections/sivel
-
-script:
   - ls -al ~/.ansible/collections/ansible_collections/sivel
   - cd ~/.ansible/collections/ansible_collections/sivel/toiletwater
   - ls -al
