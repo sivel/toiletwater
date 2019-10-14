@@ -4,18 +4,20 @@ dist: xenial
 
 matrix:
   include:
-    - python: 3.7
-      install:
-        - pip install ansible
+    # - python: 3.7
+    #   install:
+    #     - pip install ansible
     - python: 3.7
       install:
         - pip install git+https://github.com/ansible/ansible.git@devel#egg=ansible
 
 install:
+  - ls -al
   - mkdir -p ~/.ansible/collections/ansible_collections/sivel
   - ln -s $(PWD) ~/.ansible/collections/ansible_collections/sivel/toiletwater
 
 script:
+  - ls -al
   - ansible-test units --docker default -v
   # - ansible-test integration --docker centos7▒
 
