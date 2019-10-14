@@ -1,0 +1,23 @@
+language: python
+sudo: required
+dist: xenial
+
+matrix:
+  include:
+    # stable (2.8) doesn't have ansible-test
+    # - python: 3.7
+    #   install:
+    #     - pip install ansible
+    - python: 3.7
+      install:
+        - pip install git+https://github.com/ansible/ansible.git@devel#egg=ansible
+
+script:
+  - mkdir -p ~/.ansible/collections/ansible_collections/sivel
+  - mv $(pwd) ~/.ansible/collections/ansible_collections/sivel
+  - cd ~/.ansible/collections/ansible_collections/sivel/toiletwater
+  - ansible-test units --docker default -v
+
+notifications:
+  email:
+    - matt@sivel.net
