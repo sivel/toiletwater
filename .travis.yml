@@ -17,6 +17,7 @@ install:
   - mv $(PWD) ~/.ansible/collections/ansible_collections/sivel
 
 script:
+  - ls -al ~/.ansible/collections/ansible_collections/sivel
   - cd ~/.ansible/collections/ansible_collections/sivel/toiletwater
   - ls -al
   - ansible-test units --docker default -v
