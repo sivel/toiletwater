@@ -14,7 +14,7 @@ matrix:
 install:
   - ls -al
   - mkdir -p ~/.ansible/collections/ansible_collections/sivel
-  - mv $(PWD) ~/.ansible/collections/ansible_collections/sivel/toiletwater
+  - mv $(PWD) ~/.ansible/collections/ansible_collections/sivel
 
 script:
   - cd ~/.ansible/collections/ansible_collections/sivel/toiletwater
