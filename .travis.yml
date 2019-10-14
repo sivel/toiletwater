@@ -17,6 +17,7 @@ install:
   - ln -s $(PWD) ~/.ansible/collections/ansible_collections/sivel/toiletwater
 
 script:
+  - cd ~/.ansible/collections/ansible_collections/sivel/toiletwater
   - ls -al
   - ansible-test units --docker default -v
   # - ansible-test integration --docker centos7▒
