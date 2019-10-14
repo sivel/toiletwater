@@ -12,4 +12,4 @@ This repo is an Ansible collection containing some of my own Ansible plugins tha
 
 ### Modules
 
-* speedtest
+* `speedtest`
