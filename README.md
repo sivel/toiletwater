@@ -9,6 +9,8 @@ This repo is an Ansible collection containing some of my own Ansible plugins tha
 
 * `to_ini` - Convert hash/map/dict to INI format
 * `from_ini` - Convert INI to hash/map/dict
+* `to_toml` - Convert hash/map/dict to TOML format
+* `from_toml` - Convert TOML to hash/map/dict
 
 ### Modules
 

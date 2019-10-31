@@ -105,3 +105,4 @@ venv.bak/
 
 tests/output/
 *.tar.gz
+metadata-*.json
