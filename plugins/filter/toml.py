@@ -5,7 +5,6 @@
 from __future__ import (absolute_import, division, print_function)
 __metaclass__ = type
 
-import copy
 import functools
 
 from ansible.plugins.inventory.toml import HAS_TOML, toml, toml_dumps
