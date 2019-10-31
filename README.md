@@ -7,9 +7,15 @@ This repo is an Ansible collection containing some of my own Ansible plugins tha
 
 ### Filter
 
-* `to_ini`
-* `from_ini`
+* `to_ini` - Convert hash/map/dict to INI format
+* `from_ini` - Convert INI to hash/map/dict
 
 ### Modules
 
-* `speedtest`
+#### net_tools
+
+* `speedtest` - Tests internet bandwidth using speedtest.net
+
+#### Packaging
+
+* `go` - Manage Golang packages
