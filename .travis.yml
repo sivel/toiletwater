@@ -4,10 +4,9 @@ dist: xenial
 
 matrix:
   include:
-    # stable (2.8) doesn't have ansible-test
-    # - python: 3.7
-    #   install:
-    #     - pip install ansible
+    - python: 3.7
+      install:
+        - pip install ansible
     - python: 3.7
       install:
         - pip install git+https://github.com/ansible/ansible.git@devel#egg=ansible
