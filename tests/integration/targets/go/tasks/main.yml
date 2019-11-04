@@ -156,3 +156,9 @@
 - assert:
     that:
       - result is not changed
+
+- name: Uninstall gopkg.in/yaml.v2
+  go:
+    state: absent
+    name: gopkg.in/yaml.v2
+    go_path: "{{ output_dir }}/go"
