@@ -4,20 +4,59 @@ dist: xenial
 
 matrix:
   include:
+    # Sanity
     - python: 3.7
       install:
         - pip install ansible
+      script:
+        - ansible-test sanity --docker default -v
     - python: 3.7
       install:
         - pip install git+https://github.com/ansible/ansible.git@devel#egg=ansible
+      script:
+        - ansible-test sanity --docker default -v
+
+    # Units
+    - python: 3.7
+      install:
+        - pip install ansible
+      script:
+        - ansible-test units --docker default -v
+    - python: 3.7
+      install:
+        - pip install git+https://github.com/ansible/ansible.git@devel#egg=ansible
+      script:
+        - ansible-test units --docker default -v
+
+    # CentOS 7 Integration
+    - python: 3.7
+      install:
+        - pip install ansible
+      script:
+        - ansible-test integration --docker centos7 -v go
+    - python: 3.7
+      install:
+        - pip install git+https://github.com/ansible/ansible.git@devel#egg=ansible
+      script:
+        - ansible-test integration --docker centos7 -v go
+
+    # Ubuntu 18.04 Integration
+    - python: 3.7
+      install:
+        - pip install ansible
+      script:
+        - ansible-test integration --docker ubuntu1804 -v go
+    - python: 3.7
+      install:
+        - pip install git+https://github.com/ansible/ansible.git@devel#egg=ansible
+      script:
+        - ansible-test integration --docker ubuntu1804 -v go
 
 script:
   - mkdir -p ~/.ansible/collections/ansible_collections/sivel
   - mv $(pwd) ~/.ansible/collections/ansible_collections/sivel
   - cd ~/.ansible/collections/ansible_collections/sivel/toiletwater
   - ansible-test env
-  - ansible-test sanity --docker default -v
-  - ansible-test units --docker default -v
 
 notifications:
   email:

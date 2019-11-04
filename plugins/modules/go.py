@@ -134,6 +134,7 @@ def uninstall(module):
     clean_cmd = [
         go_bin,
         'clean',
+        '-cache',
         '-i',
     ]
 
