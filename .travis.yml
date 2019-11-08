@@ -38,13 +38,13 @@ matrix:
       install:
         - pip install ansible
       script:
-        - ansible-test integration --docker centos7 -v go
+        - ansible-test integration --docker centos7 -v
     - name: CentOS 7 Devel Integration
       python: 3.7
       install:
         - pip install git+https://github.com/ansible/ansible.git@devel#egg=ansible
       script:
-        - ansible-test integration --docker centos7 -v go
+        - ansible-test integration --docker centos7 -v
 
     # Ubuntu 18.04 Integration
     - name: Ubuntu 18.04 Stable Integration
@@ -52,13 +52,13 @@ matrix:
       install:
         - pip install ansible
       script:
-        - ansible-test integration --docker ubuntu1804 -v go
+        - ansible-test integration --docker ubuntu1804 -v
     - name: Ubuntu 18.04 Devel Integration
       python: 3.7
       install:
         - pip install git+https://github.com/ansible/ansible.git@devel#egg=ansible
       script:
-        - ansible-test integration --docker ubuntu1804 -v go
+        - ansible-test integration --docker ubuntu1804 -v
 
 before_script:
   - mkdir -p ~/.ansible/collections/ansible_collections/sivel
