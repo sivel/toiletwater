@@ -186,7 +186,7 @@ def main():
         module.fail_json(msg='speedtest-cli>=2.0.0 python module required for this '
                              'module')
 
-    if not all((module.params['download'], module.params['upload'])):
+    if not any((module.params['download'], module.params['upload'])):
         module.fail_json(msg='At least one of download or upload must be set to True')
 
     try:
