@@ -1,0 +1,51 @@
+- name: Run speedtest
+  speedtest:
+  register: result
+
+- assert:
+    that:
+      - result is not changed
+      - result.bytes_received|type_debug == 'int'
+      - result.bytes_sent|type_debug == 'int'
+      - result.download|type_debug == 'float'
+      - result.ping|type_debug == 'float'
+      - result.upload|type_debug == 'float'
+      - result.share is none
+
+- name: No upload
+  speedtest:
+    upload: false
+  register: result
+
+- assert:
+    that:
+      - result.upload == 0
+
+- name: No download
+  speedtest:
+    download: false
+  register: result
+
+- assert:
+    that:
+      - result.download == 0
+
+- name: share
+  speedtest:
+    share: true
+  register: result
+
+- assert:
+    that:
+      - result.share is not none
+
+- name: no down or up
+  speedtest:
+    upload: false
+    download: false
+  register: result
+  ignore_errors: true
+
+- assert:
+    that:
+      - result is failed

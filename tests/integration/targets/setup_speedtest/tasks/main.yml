@@ -1,0 +1,6 @@
+- name: Install speedtest-cli
+  pip:
+    name: speedtest-cli
+    state: present
+  notify:
+    - Uninstall speedtest-cli

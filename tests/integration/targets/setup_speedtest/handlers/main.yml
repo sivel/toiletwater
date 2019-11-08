@@ -1,0 +1,4 @@
+- name: Uninstall speedtest-cli
+  pip:
+    name: speedtest-cli
+    state: absent
