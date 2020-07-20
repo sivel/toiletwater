@@ -26,6 +26,7 @@ options:
           - List of servers to exclude from testing
         required: false
         type: list
+        elements: int
     pre_allocate:
         default: true
         description:
@@ -44,6 +45,7 @@ options:
           - List of servers to limit for testing
         required: false
         type: list
+        elements: int
     share:
         default: false
         description:

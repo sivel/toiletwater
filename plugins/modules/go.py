@@ -22,6 +22,7 @@ options:
             - Name of Go package to install
         required: true
         type: list
+        elements: str
     state:
         choices:
             - present
@@ -204,7 +205,7 @@ def uninstall(module):
 def main():
     module = AnsibleModule(
         argument_spec=dict(
-            name=dict(type='list', required=True),
+            name=dict(type='list', required=True, elements='str'),
             state=dict(type='str', choices=['present', 'absent', 'latest', 'download'], default='present'),
             validate_certs=dict(type='bool', default=True),
             go_path=dict(type='path', fallback=(env_fallback, ['GOPATH'])),
