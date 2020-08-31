@@ -82,6 +82,7 @@ def do_jq(value, expression, text=False, multiple=False):
             )
         )
 
+
 class FilterModule(object):
     def filters(self):
         filters = {
