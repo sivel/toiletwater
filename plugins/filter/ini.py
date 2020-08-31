@@ -27,7 +27,8 @@ def from_ini(o):
     for k in d:
         d[k] = dict(d[k])
         d[k].pop('__name__', None)
-    d['DEFAULT'] = dict(parser._defaults)
+    if parser._defaults:
+        d['DEFAULT'] = dict(parser._defaults)
     return d
 
 

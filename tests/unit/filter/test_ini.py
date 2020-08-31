@@ -30,6 +30,14 @@ disk_cachemodes = file=directsync,block=none
 idle_timeout = 900
 max_pool_size = 30'''
 
+ini_no_default = '''[libvirt]
+cpu_mode = host-model
+disk_cachemodes = file=directsync,block=none
+
+[database]
+idle_timeout = 900
+max_pool_size = 30'''
+
 
 @pytest.mark.skipif(OrderedDict is dict, reason="requires python2.7 or higher")
 def test_to_ini():
@@ -38,3 +46,4 @@ def test_to_ini():
 
 def test_from_ini():
     assert ini.from_ini(ini_data) == dict_data
+    assert 'DEFAULT' not in ini.from_ini(ini_no_default)
