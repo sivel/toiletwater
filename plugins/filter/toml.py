@@ -7,7 +7,11 @@ __metaclass__ = type
 
 import functools
 
-from ansible.plugins.inventory.toml import HAS_TOML, toml, toml_dumps
+from ansible.plugins.inventory.toml import HAS_TOML, toml_dumps
+try:
+    from ansible.plugins.inventory.toml import toml
+except ImportError:
+    pass
 
 from ansible.errors import AnsibleFilterError
 from ansible.module_utils._text import to_text
