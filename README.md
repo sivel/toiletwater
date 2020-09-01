@@ -1,4 +1,4 @@
-# toiletwater
+# sivel.toiletwater
 You might be able to drink it in an emergency, but you might still die
 
 This repo is an Ansible collection containing some of my own Ansible plugins that died in the PR phase, and have instead been moved to this festering repository.
@@ -22,3 +22,8 @@ This repo is an Ansible collection containing some of my own Ansible plugins tha
 #### Packaging
 
 * `go` - Manage Golang packages
+
+### Callback
+
+* `dump_stats` - Callback to dump to stats from `set_stat` to a JSON file
+* `cprofile` - Uses `cProfile` to profile the python execution of ansible
