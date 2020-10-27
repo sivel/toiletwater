@@ -1,6 +1,6 @@
 namespace: "sivel"
 name: "toiletwater"
-version: "0.0.10-a1"
+version: "0.0.10"
 readme: "README.md"
 authors:
     - "sivel <matt@sivel.net>"
@@ -12,5 +12,5 @@ tags:
     - awesome
     - sweet
     - amazing
-repository: "https://www.github.com/sivel/toiletwater"
+repository: "https://github.com/sivel/toiletwater"
 description: You might be able to drink it in an emergency, but you might still die
