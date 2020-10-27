@@ -117,7 +117,7 @@ jobs:
           ansible-test env
         working-directory: ./ansible_collections/sivel/toiletwater
 
-      - name: Run unit tests
+      - name: Run integration tests
         run: |
-          ansible-test units --docker ${{ matrix.os }} -v
+          ansible-test integration --docker ${{ matrix.os }} -v
         working-directory: ./ansible_collections/sivel/toiletwater
