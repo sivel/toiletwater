@@ -92,7 +92,6 @@ jobs:
           - centos7
           - centos8
           - ubuntu1804
-          - alpine3
         ansible:
           - ansible-base
           - https://github.com/ansible/ansible/archive/devel.tar.gz#egg=ansible-base
