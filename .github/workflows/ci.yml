@@ -64,7 +64,7 @@ jobs:
             package: ansible-base
           - name: devel
             package: https://github.com/ansible/ansible/archive/devel.tar.gz#egg=ansible-base
-   steps:
+    steps:
       - name: Check out code
         uses: actions/checkout@v2
         with:
