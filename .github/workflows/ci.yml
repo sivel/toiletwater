@@ -12,6 +12,7 @@ on:
 
 jobs:
   sanity:
+    name: sanity | ${{ matrix.ansible.name }}
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -47,14 +48,10 @@ jobs:
         working-directory: ./ansible_collections/sivel/toiletwater
 
   units:
+    name: units | ${{ matrix.ansible.name }} | PY${{ matrix.python-version }}
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        ansible:
-          - name: stable
-            package: ansible-base
-          - name: devel
-            package: https://github.com/ansible/ansible/archive/devel.tar.gz#egg=ansible-base
         python-version:
           - 2.7
           - 3.5
@@ -62,7 +59,12 @@ jobs:
           - 3.7
           - 3.8
           - 3.9
-    steps:
+         ansible:
+          - name: stable
+            package: ansible-base
+          - name: devel
+            package: https://github.com/ansible/ansible/archive/devel.tar.gz#egg=ansible-base
+   steps:
       - name: Check out code
         uses: actions/checkout@v2
         with:
@@ -89,6 +91,7 @@ jobs:
         working-directory: ./ansible_collections/sivel/toiletwater
 
   integration:
+    name: integration | ${{ matrix.ansible.name }} | ${{ matrix.os }}
     runs-on: ubuntu-latest
     strategy:
       matrix:
