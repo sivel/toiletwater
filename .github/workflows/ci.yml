@@ -59,7 +59,7 @@ jobs:
           - 3.7
           - 3.8
           - 3.9
-         ansible:
+        ansible:
           - name: stable
             package: ansible-base
           - name: devel
