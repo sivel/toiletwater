@@ -12,12 +12,17 @@ on:
 
 jobs:
   sanity:
+    name: sanity | ${{ matrix.ansible.name }}
     runs-on: ubuntu-latest
     strategy:
       matrix:
         ansible:
-          - ansible-base
-          - https://github.com/ansible/ansible/archive/devel.tar.gz#egg=ansible-base
+          - name: stable-2.9
+            package: ansible>=2.9,<2.10
+          - name: stable
+            package: ansible-base
+          - name: devel
+            package: https://github.com/ansible/ansible/archive/devel.tar.gz#egg=ansible-base
     steps:
       - name: Check out code
         uses: actions/checkout@v2
@@ -29,10 +34,10 @@ jobs:
         with:
           python-version: 3.9
 
-      - name: Install ansible ${{ matrix.ansible }}
+      - name: Install ansible ${{ matrix.ansible.name }}
         run: |
           python -m pip install --upgrade pip
-          pip install ${{ matrix.ansible }}
+          pip install ${{ matrix.ansible.package }}
 
       - name: Debug test env
         run: |
@@ -45,12 +50,17 @@ jobs:
         working-directory: ./ansible_collections/sivel/toiletwater
 
   units:
+    name: units | ${{ matrix.ansible.name }} | py${{ matrix.python-version }}
     runs-on: ubuntu-latest
     strategy:
       matrix:
         ansible:
-          - ansible-base
-          - https://github.com/ansible/ansible/archive/devel.tar.gz#egg=ansible-base
+          - name: stable-2.9
+            package: ansible>=2.9,<2.10
+          - name: stable
+            package: ansible-base
+          - name: devel
+            package: https://github.com/ansible/ansible/archive/devel.tar.gz#egg=ansible-base
         python-version:
           - 2.7
           - 3.5
@@ -69,10 +79,10 @@ jobs:
         with:
           python-version: 3.9
 
-      - name: Install ansible ${{ matrix.ansible }}
+      - name: Install ansible ${{ matrix.ansible.name }}
         run: |
           python -m pip install --upgrade pip
-          pip install ${{ matrix.ansible }}
+          pip install ${{ matrix.ansible.package }}
 
       - name: Debug test env
         run: |
@@ -85,16 +95,21 @@ jobs:
         working-directory: ./ansible_collections/sivel/toiletwater
 
   integration:
+    name: integration | ${{ matrix.ansible.name }} | ${{ matrix.os }}
     runs-on: ubuntu-latest
     strategy:
       matrix:
+        ansible:
+          - name: stable-2.9
+            package: ansible>=2.9,<2.10
+          - name: stable
+            package: ansible-base
+          - name: devel
+            package: https://github.com/ansible/ansible/archive/devel.tar.gz#egg=ansible-base
         os:
           - centos7
           - centos8
           - ubuntu1804
-        ansible:
-          - ansible-base
-          - https://github.com/ansible/ansible/archive/devel.tar.gz#egg=ansible-base
     steps:
       - name: Check out code
         uses: actions/checkout@v2
@@ -106,10 +121,10 @@ jobs:
         with:
           python-version: 3.9
 
-      - name: Install ansible ${{ matrix.ansible }}
+      - name: Install ansible ${{ matrix.ansible.name }}
         run: |
           python -m pip install --upgrade pip
-          pip install ${{ matrix.ansible }}
+          pip install ${{ matrix.ansible.package }}
 
       - name: Debug test env
         run: |
