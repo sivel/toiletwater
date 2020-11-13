@@ -98,7 +98,7 @@ def main():
             },
             'pattern': {
                 'type': 'str',
-                'required': False,
+                'required': True,
             },
             'all': {
                 'type': 'bool',
