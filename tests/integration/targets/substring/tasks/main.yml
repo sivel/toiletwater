@@ -1,0 +1,38 @@
+- substring:
+    path: '{{ role_path }}/LICENSE'
+    pattern: '(?i)(?P<key>license)'
+    all: false
+  register: substring_first
+
+- substring:
+    path: '{{ role_path }}/LICENSE'
+    pattern: '(?i)(?P<key>license)'
+    all: true
+  register: substring_all
+
+- substring:
+    path: '{{ role_path }}/LICENSE'
+    pattern: sivel is the best
+  register: substring_missing
+  ignore_errors: true
+
+- assert:
+    that:
+      - substring_first.matches|length == 1
+      - substring_first.found
+      - substring_first.matches[0].lineno == 1
+      - substring_first.matches[0].column == 40
+      - >-
+        substring_first.matches[0].match == 'LICENSE'
+      - >-
+        substring_first.matches[0].groups == ['LICENSE']
+      - >-
+        substring_first.matches[0].groupdict == {'key': 'LICENSE'}
+
+      - substring_all.matches|length == 118
+      - substring_all.matches[-1].lineno == 674
+      - substring_all.matches[-1].column == 22
+
+      - substring_missing is failed
+      - not substring_missing.found
+      - substring_missing.matches|length == 0
