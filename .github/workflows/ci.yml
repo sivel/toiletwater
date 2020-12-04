@@ -22,7 +22,7 @@ jobs:
           - name: stable
             package: ansible-base
           - name: devel
-            package: https://github.com/ansible/ansible/archive/devel.tar.gz#egg=ansible-base
+            package: https://github.com/ansible/ansible/archive/devel.tar.gz#egg=ansible-core
     steps:
       - name: Check out code
         uses: actions/checkout@v2
@@ -60,7 +60,7 @@ jobs:
           - name: stable
             package: ansible-base
           - name: devel
-            package: https://github.com/ansible/ansible/archive/devel.tar.gz#egg=ansible-base
+            package: https://github.com/ansible/ansible/archive/devel.tar.gz#egg=ansible-core
         python-version:
           - 2.7
           - 3.5
@@ -110,7 +110,7 @@ jobs:
           - name: stable
             package: ansible-base
           - name: devel
-            package: https://github.com/ansible/ansible/archive/devel.tar.gz#egg=ansible-base
+            package: https://github.com/ansible/ansible/archive/devel.tar.gz#egg=ansible-core
         os:
           - centos7
           - centos8
