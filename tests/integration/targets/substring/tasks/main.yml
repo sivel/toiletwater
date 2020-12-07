@@ -16,6 +16,41 @@
   register: substring_missing
   ignore_errors: true
 
+- substring:
+    path: '{{ role_path }}/LICENSE'
+    pattern: '(?s)(?P<key>denying you.these rights)'
+    all: false
+  register: substring_dotall
+
+- substring:
+    path: '{{ role_path }}/LICENSE'
+    pattern: '(?i)(?P<key>license)'
+    all: false
+    scope: line
+  register: substring_first_line
+
+- substring:
+    path: '{{ role_path }}/LICENSE'
+    pattern: '(?i)(?P<key>license)'
+    all: true
+    scope: line
+  register: substring_all_line
+
+- substring:
+    path: '{{ role_path }}/LICENSE'
+    pattern: sivel is the best
+    scope: line
+  register: substring_missing_line
+  ignore_errors: true
+
+- substring:
+    path: '{{ role_path }}/LICENSE'
+    pattern: '(?s)(?P<key>denying you.these rights)'
+    all: false
+    scope: line
+  register: substring_dotall_line
+  ignore_errors: true
+
 - assert:
     that:
       - substring_first.matches|length == 1
@@ -36,3 +71,33 @@
       - substring_missing is failed
       - not substring_missing.found
       - substring_missing.matches|length == 0
+
+      - substring_first_line.matches|length == 1
+      - substring_first_line.found
+      - substring_first_line.matches[0].lineno == 1
+      - substring_first_line.matches[0].column == 40
+      - >-
+        substring_first_line.matches[0].match == 'LICENSE'
+      - >-
+        substring_first_line.matches[0].groups == ['LICENSE']
+      - >-
+        substring_first_line.matches[0].groupdict == {'key': 'LICENSE'}
+
+      - substring_all_line.matches|length == 118
+      - substring_all_line.matches[-1].lineno == 674
+      - substring_all_line.matches[-1].column == 22
+
+      - substring_missing_line is failed
+      - not substring_missing_line.found
+      - substring_missing_line.matches|length == 0
+
+      - substring_dotall.matches|length == 1
+      - substring_dotall.found
+      - substring_dotall.matches[0].lineno == 29
+      - substring_dotall.matches[0].column == 58
+      - >-
+        substring_dotall.matches[0].match == 'denying you\nthese rights'
+
+      - substring_dotall_line is failed
+      - not substring_dotall_line.found
+      - substring_dotall_line.matches|length == 0

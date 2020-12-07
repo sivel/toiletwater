@@ -24,6 +24,14 @@ DOCUMENTATION = r'''
             description: Return all matches instead of the first
             type: bool
             default: false
+        scope:
+            description: Whether to restrict search to the whole file
+                         or line by line
+            type: str
+            default: full
+            choices:
+                - full
+                - line
     requirements: []
     notes:
         - For multi-line, dot matches all, case insensitve, and other regex
@@ -62,22 +70,43 @@ def regex(v):
         raise TypeError(to_native(e))
 
 
-def search(path, pattern, return_all):
+def full_search(path, pattern, return_all):
     b_path = to_bytes(path, errors='surrogate_or_strict')
     with open(b_path, 'rb') as f:
         mm_file = mmap.mmap(f.fileno(), 0, access=mmap.ACCESS_READ)
         matches = pattern.finditer(mm_file)
         if not return_all:
-            return [format_match(next(matches), mm_file)]
-        return [format_match(m, mm_file) for m in matches]
+            return [format_match(next(matches), mm_file=mm_file)]
+        return [format_match(m, mm_file=mm_file) for m in matches]
 
 
-def format_match(match, mm_file):
+def line_search(path, pattern, return_all):
+    b_path = to_bytes(path, errors='surrogate_or_strict')
+    i = 0
+    ret = []
+    with open(b_path, 'rb') as f:
+        for line in f:
+            i += 1
+            matches = pattern.finditer(line)
+            try:
+                if not return_all:
+                    ret.append(format_match(next(matches), lineno=i))
+                    break
+                ret.extend(format_match(m, lineno=i) for m in matches)
+            except StopIteration:
+                continue
+    return ret
+
+
+def format_match(match, mm_file=None, lineno=None):
     span = match.span()
-    lineno = mm_file[:span[0]].count(b'\n') + 1
-    try:
-        column = span[0] - mm_file[:span[0]].rindex(b'\n')
-    except ValueError:
+    if mm_file is not None:
+        lineno = mm_file[:span[0]].count(b'\n') + 1
+        try:
+            column = span[0] - mm_file[:span[0]].rindex(b'\n')
+        except ValueError:
+            column = span[0] + 1
+    elif lineno is not None:
         column = span[0] + 1
     return {
         'span': span,
@@ -104,6 +133,14 @@ def main():
                 'type': 'bool',
                 'default': False,
             },
+            'scope': {
+                'type': 'str',
+                'choices': [
+                    'full',
+                    'line',
+                ],
+                'default': 'full',
+            },
         },
     )
 
@@ -112,16 +149,22 @@ def main():
     except TypeError as e:
         module.fail_json(msg='pattern must be valid regex: %s' % e)
 
+    if module.params['scope'] == 'full':
+        search = full_search
+    else:
+        search = line_search
+
     try:
         matches = search(
             module.params['path'],
             pattern,
             module.params['all'],
         )
-        found = True
     except StopIteration:
         matches = []
         found = False
+    else:
+        found = bool(matches)
 
     module.exit_json(matches=matches, found=found, failed=not found)
 
