@@ -60,7 +60,6 @@ DOCUMENTATION = '''
 
 import cProfile
 import functools
-import importlib.util
 import json
 import os
 import pickle
@@ -68,7 +67,6 @@ import pstats
 import shutil
 import tempfile
 import time
-from contextlib import contextmanager
 from glob import iglob
 
 from ansible.errors import AnsibleError
@@ -76,6 +74,12 @@ from ansible.executor.process.worker import WorkerProcess
 from ansible.module_utils.six import PY3
 from ansible.playbook.block import Block
 from ansible.plugins.callback import CallbackBase
+
+try:
+    import importlib.util
+except ImportError:
+    # Handled by PY3 check later
+    pass
 
 
 VALID_SORTS = frozenset(pstats.Stats.sort_arg_dict_default.keys())
