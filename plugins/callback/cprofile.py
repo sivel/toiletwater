@@ -56,6 +56,15 @@ DOCUMENTATION = '''
           - key: per_host_task
             section: cprofile_callback
         type: bool
+      profile_forks:
+        description: Whether to profile code executed in forks
+        default: True
+        env:
+          - name: CPROFILE_PROFILE_FORKS
+        ini:
+          - key: profile_forks
+            section: cprofile_callback
+        type: bool
 '''
 
 import cProfile
@@ -178,10 +187,11 @@ class CallbackModule(CallbackBase):
         else:
             self._worker_tmp = tempfile.mkdtemp()
 
-            WorkerProcess.run = self._profile_worker(WorkerProcess.run)
-
             self._p = cProfile.Profile()
             self._p.enable()
+
+    def _wrap_worker(self):
+        WorkerProcess.run = self._profile_worker(WorkerProcess.run)
 
     def _profile_worker(self, func):
         """Closure for profiling ``WorkerProcess.run`` with ``cProfile``
@@ -230,6 +240,9 @@ class CallbackModule(CallbackBase):
         sort = self.get_option('sort')
         strip_dirs = self.get_option('strip_dirs')
         self._per_host_task = self.get_option('per_host_task')
+
+        if self.get_option('profile_forks'):
+            self._wrap_worker()
 
         if any(filters):
             self._filters = []
