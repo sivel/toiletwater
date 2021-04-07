@@ -25,6 +25,15 @@ DOCUMENTATION = '''
           - key: filters
             section: cprofile_callback
         type: list
+      limit:
+        description: limit the output to the top N profile results. Defaults to no limit
+        default: -1
+        env:
+          - name: CPROFILE_LIMIT
+        ini:
+          - key: limit
+            section: cprofile_callback
+        type: int
       sort:
         description: Sort order of cProfile output
         default:
@@ -240,6 +249,7 @@ class CallbackModule(CallbackBase):
         sort = self.get_option('sort')
         strip_dirs = self.get_option('strip_dirs')
         self._per_host_task = self.get_option('per_host_task')
+        self._limit = self.get_option('limit')
 
         if self.get_option('profile_forks'):
             self._wrap_worker()
@@ -279,7 +289,7 @@ class CallbackModule(CallbackBase):
             if self._strip_dirs:
                 strip_filter(ps, self._filters)
             self._display.banner('Control')
-            ps.sort_stats(*self._sort).print_stats()
+            ps.sort_stats(*self._sort).print_stats(self._limit)
 
             for item in iglob('%s/*.pstat' % tmp):
                 ps = load_stats(item)
@@ -292,7 +302,7 @@ class CallbackModule(CallbackBase):
                 self._display.banner(
                     '%(play)s - %(task_name)s - %(host)s' % data
                 )
-                ps.sort_stats(*self._sort).print_stats()
+                ps.sort_stats(*self._sort).print_stats(self._limit)
         else:
             ps = pstats.Stats(self._p)
             ps.add(
@@ -308,7 +318,7 @@ class CallbackModule(CallbackBase):
             if self._strip_dirs:
                 strip_filter(ps, self._filters)
             self._display.banner('Profile')
-            ps.sort_stats(*self._sort).print_stats()
+            ps.sort_stats(*self._sort).print_stats(self._limit)
 
         try:
             shutil.rmtree(tmp)
