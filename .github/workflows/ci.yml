@@ -115,6 +115,7 @@ jobs:
           - centos7
           - centos8
           - ubuntu1804
+          - ubuntu2004
     steps:
       - name: Check out code
         uses: actions/checkout@v2

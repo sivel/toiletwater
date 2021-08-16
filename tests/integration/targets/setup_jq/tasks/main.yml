@@ -1,6 +1,36 @@
-- name: Install jq
-  pip:
-    name: jq
-    state: present
-  notify:
-    - Uninstall jq
+- block:
+    - name: Install jq
+      pip:
+        name: jq
+        state: present
+      register: jq_install
+      notify:
+        - Uninstall jq
+  rescue:
+    - fail:
+        msg: 'Unknown install failure. Not caused by missing requests.'
+      when: jq_install.msg is not contains 'import requests'
+
+    - name: Install requests
+      pip:
+        name: requests
+        state: present
+      register: jq_requests_install
+      notify:
+        - Uninstall requests
+
+    - set_fact:
+        jq_requests_uninst: '{{ uninstalled_pv|map("regex_replace", "(.+)-([^-]+)$", "\1==\2") }}'
+        jq_requests_inst: '{{ installed_pv|map("regex_replace", "(.+)-([^-]+)$", "\1==\2") }}'
+      vars:
+        uninstalled_lines: '{{ jq_requests_install.stdout_lines|select("contains", "Successfully uninstalled") }}'
+        uninstalled_pv: '{{ uninstalled_lines|map("regex_replace", ".+ ([^ ]+)$", "\1") }}'
+        installed_line: '{{ jq_requests_install.stdout_lines|select("contains", "Successfully installed")|first }}'
+        installed_pv: '{{ (installed_line|split)[2:] }}'
+
+    - name: Install jq
+      pip:
+        name: jq
+        state: present
+      notify:
+        - Uninstall jq

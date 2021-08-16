@@ -1,3 +1,13 @@
+- pip:
+    name: '{{ jq_requests_inst }}'
+    state: absent
+  listen: Uninstall requests
+
+- pip:
+    name: '{{ jq_requests_uninst }}'
+    state: present
+  listen: Uninstall requests
+
 - name: Uninstall jq
   pip:
     name: jq

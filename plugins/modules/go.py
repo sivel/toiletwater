@@ -218,11 +218,9 @@ def main():
     module.run_command_environ_update = env
 
     if module.params['state'] in ('present', 'latest', 'download'):
-        rc, stdout, stderr, changed = install(module)
+        install(module)
     else:
-        rc, stdout, stderr, changed = uninstall(module)
-
-    module.exit_json(rc=rc, stdout=stdout, stderr=stderr, changed=changed)
+        uninstall(module)
 
 
 if __name__ == '__main__':
