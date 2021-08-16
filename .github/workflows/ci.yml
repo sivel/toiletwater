@@ -17,8 +17,6 @@ jobs:
     strategy:
       matrix:
         ansible:
-          - name: stable-2.9
-            package: ansible>=2.9,<2.10
           - name: stable-2.10
             package: ansible-base
           - name: stable-2.11
@@ -57,8 +55,6 @@ jobs:
     strategy:
       matrix:
         ansible:
-          - name: stable-2.9
-            package: ansible>=2.9,<2.10
           - name: stable-2.10
             package: ansible-base
           - name: stable-2.11
@@ -72,11 +68,6 @@ jobs:
           - 3.7
           - 3.8
           - 3.9
-        exclude:
-          - ansible:
-              name: stable-2.9
-              package: ansible>=2.9,<2.10
-            python-version: 3.9
     steps:
       - name: Check out code
         uses: actions/checkout@v2
@@ -109,8 +100,6 @@ jobs:
     strategy:
       matrix:
         ansible:
-          - name: stable-2.9
-            package: ansible>=2.9,<2.10
           - name: stable-2.10
             package: ansible-base
           - name: stable-2.11
@@ -122,11 +111,6 @@ jobs:
           - centos8
           - ubuntu1804
           - ubuntu2004
-        exclude:
-          - ansible:
-              name: stable-2.9
-              package: ansible>=2.9,<2.10
-            os: ubuntu2004
     steps:
       - name: Check out code
         uses: actions/checkout@v2
