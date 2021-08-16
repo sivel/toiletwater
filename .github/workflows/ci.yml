@@ -19,8 +19,10 @@ jobs:
         ansible:
           - name: stable-2.9
             package: ansible>=2.9,<2.10
-          - name: stable
+          - name: stable-2.10
             package: ansible-base
+          - name: stable-2.11
+            package: ansible-core>=2.11,<2.12
           - name: devel
             package: https://github.com/ansible/ansible/archive/devel.tar.gz
     steps:
@@ -57,8 +59,10 @@ jobs:
         ansible:
           - name: stable-2.9
             package: ansible>=2.9,<2.10
-          - name: stable
+          - name: stable-2.10
             package: ansible-base
+          - name: stable-2.11
+            package: ansible-core>=2.11,<2.12
           - name: devel
             package: https://github.com/ansible/ansible/archive/devel.tar.gz
         python-version:
@@ -107,8 +111,10 @@ jobs:
         ansible:
           - name: stable-2.9
             package: ansible>=2.9,<2.10
-          - name: stable
+          - name: stable-2.10
             package: ansible-base
+          - name: stable-2.11
+            package: ansible-core>=2.11,<2.12
           - name: devel
             package: https://github.com/ansible/ansible/archive/devel.tar.gz
         os:
@@ -116,6 +122,11 @@ jobs:
           - centos8
           - ubuntu1804
           - ubuntu2004
+        exclude:
+          - ansible:
+              name: stable-2.9
+              package: ansible>=2.9,<2.10
+            os: ubuntu2004
     steps:
       - name: Check out code
         uses: actions/checkout@v2
