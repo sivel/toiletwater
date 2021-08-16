@@ -1,9 +1,11 @@
-- pip:
+- name: Remove requests and associated deps
+  pip:
     name: '{{ jq_requests_inst }}'
     state: absent
   listen: Uninstall requests
 
-- pip:
+- name: Restore package versions that were upgraded with requests
+  pip:
     name: '{{ jq_requests_uninst }}'
     state: present
   listen: Uninstall requests

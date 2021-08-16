@@ -60,7 +60,6 @@ DOCUMENTATION = '''
 
 import cProfile
 import functools
-import importlib.util
 import json
 import os
 import pickle
@@ -70,6 +69,11 @@ import tempfile
 import time
 from contextlib import contextmanager
 from glob import iglob
+
+try:
+    import importlib.util
+except ImportError:
+    pass
 
 from ansible.errors import AnsibleError
 from ansible.executor.process.worker import WorkerProcess

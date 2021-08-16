@@ -26,7 +26,7 @@
         uninstalled_lines: '{{ jq_requests_install.stdout_lines|select("contains", "Successfully uninstalled") }}'
         uninstalled_pv: '{{ uninstalled_lines|map("regex_replace", ".+ ([^ ]+)$", "\1") }}'
         installed_line: '{{ jq_requests_install.stdout_lines|select("contains", "Successfully installed")|first }}'
-        installed_pv: '{{ (installed_line|split)[2:] }}'
+        installed_pv: '{{ installed_line.split()[2:] }}'
 
     - name: Install jq
       pip:
