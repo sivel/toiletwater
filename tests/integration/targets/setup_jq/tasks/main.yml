@@ -1,4 +1,5 @@
-- block:
+- delegate_to: localhost
+  block:
     - name: Install jq
       pip:
         name: jq
