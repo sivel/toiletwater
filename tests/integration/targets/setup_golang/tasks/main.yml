@@ -4,3 +4,8 @@
     state: present
   notify:
     - Uninstall golang
+
+- name: Ensure latest ca-certificates
+  package:
+    name: ca-certificates
+    state: latest
