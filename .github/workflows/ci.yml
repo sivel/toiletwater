@@ -17,10 +17,6 @@ jobs:
     strategy:
       matrix:
         ansible:
-          - name: stable-2.10
-            package: ansible-base
-          - name: stable-2.11
-            package: ansible-core>=2.11,<2.12
           - name: devel
             package: https://github.com/ansible/ansible/archive/devel.tar.gz
     steps:
@@ -55,19 +51,12 @@ jobs:
     strategy:
       matrix:
         ansible:
-          - name: stable-2.10
-            package: ansible-base
-          - name: stable-2.11
-            package: ansible-core>=2.11,<2.12
           - name: devel
             package: https://github.com/ansible/ansible/archive/devel.tar.gz
         python-version:
-          - 2.7
-          - 3.5
-          - 3.6
-          - 3.7
           - 3.8
           - 3.9
+          - 3.10
     steps:
       - name: Check out code
         uses: actions/checkout@v2
@@ -100,16 +89,11 @@ jobs:
     strategy:
       matrix:
         ansible:
-          - name: stable-2.10
-            package: ansible-base
-          - name: stable-2.11
-            package: ansible-core>=2.11,<2.12
           - name: devel
             package: https://github.com/ansible/ansible/archive/devel.tar.gz
         os:
-          - centos7
-          - centos8
-          - ubuntu1804
+          - alpine3
+          - fedora35
           - ubuntu2004
     steps:
       - name: Check out code
