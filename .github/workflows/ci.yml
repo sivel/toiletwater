@@ -92,7 +92,6 @@ jobs:
           - name: devel
             package: https://github.com/ansible/ansible/archive/devel.tar.gz
         os:
-          - alpine3
           - fedora35
           - ubuntu2004
     steps:
