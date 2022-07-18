@@ -127,5 +127,5 @@ jobs:
 
       - name: Run integration tests
         run: |
-          ansible-test integration --docker ${{ matrix.os }} -v
+          ansible-test integration -v
         working-directory: ./ansible_collections/sivel/toiletwater
