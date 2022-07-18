@@ -122,6 +122,7 @@ jobs:
           locale -a
           locale
           env
+          python3.9 -c 'import locale; locale.setlocale(locale.LC_ALL, ""); print(locale.getlocale())'
         working-directory: ./ansible_collections/sivel/toiletwater
 
       - name: Run integration tests
