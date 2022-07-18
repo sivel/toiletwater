@@ -1,13 +1,13 @@
 - name: Create go path
   file:
     state: directory
-    path: "{{ output_dir }}/go"
+    path: "{{ remote_tmp_dir }}/go"
 
 - name: Install gopkg.in/yaml.v2
   go:
     state: present
     name: gopkg.in/yaml.v2
-    go_path: "{{ output_dir }}/go"
+    go_path: "{{ remote_tmp_dir }}/go"
   register: result
 
 - assert:
@@ -18,18 +18,24 @@
   go:
     state: present
     name: gopkg.in/yaml.v2
-    go_path: "{{ output_dir }}/go"
+    go_path: "{{ remote_tmp_dir }}/go"
   register: result
 
 - assert:
     that:
       - result is not changed
 
+- environment:
+    GOPATH: "{{ remote_tmp_dir }}/go"
+  block:
+    - command: go list gopkg.in/yaml.v2
+    - command: go clean -cache -i gopkg.in/yaml.v2
+
 - name: Uninstall gopkg.in/yaml.v2
   go:
     state: absent
     name: gopkg.in/yaml.v2
-    go_path: "{{ output_dir }}/go"
+    go_path: "{{ remote_tmp_dir }}/go"
   register: result
 
 - assert:
@@ -40,7 +46,7 @@
   go:
     state: absent
     name: gopkg.in/yaml.v2
-    go_path: "{{ output_dir }}/go"
+    go_path: "{{ remote_tmp_dir }}/go"
   register: result
 
 - assert:
@@ -51,7 +57,7 @@
   go:
     state: present
     name: gopkg.in/yaml.v2
-    go_path: "{{ output_dir }}/go"
+    go_path: "{{ remote_tmp_dir }}/go"
   register: result
 
 - assert:
@@ -62,7 +68,7 @@
   go:
     state: absent
     name: gopkg.in/yaml.v2
-    go_path: "{{ output_dir }}/go"
+    go_path: "{{ remote_tmp_dir }}/go"
   register: result
 
 - assert:
@@ -75,7 +81,7 @@
     name:
       - gopkg.in/yaml.v1
       - gopkg.in/yaml.v2
-    go_path: "{{ output_dir }}/go"
+    go_path: "{{ remote_tmp_dir }}/go"
   register: result
 
 - assert:
@@ -88,7 +94,7 @@
     name:
       - gopkg.in/yaml.v1
       - gopkg.in/yaml.v2
-    go_path: "{{ output_dir }}/go"
+    go_path: "{{ remote_tmp_dir }}/go"
   register: result
 
 - assert:
@@ -101,7 +107,7 @@
     name:
       - gopkg.in/yaml.v1
       - gopkg.in/yaml.v2
-    go_path: "{{ output_dir }}/go"
+    go_path: "{{ remote_tmp_dir }}/go"
   register: result
 
 - assert:
@@ -114,7 +120,7 @@
     name:
       - gopkg.in/yaml.v1
       - gopkg.in/yaml.v2
-    go_path: "{{ output_dir }}/go"
+    go_path: "{{ remote_tmp_dir }}/go"
   register: result
 
 - assert:
@@ -127,7 +133,7 @@
     name:
       - gopkg.in/yaml.v1
       - gopkg.in/yaml.v2
-    go_path: "{{ output_dir }}/go"
+    go_path: "{{ remote_tmp_dir }}/go"
   register: result
 
 - assert:
@@ -139,7 +145,7 @@
     state: absent
     name:
       - gopkg.in/yaml.v1
-    go_path: "{{ output_dir }}/go"
+    go_path: "{{ remote_tmp_dir }}/go"
   register: result
 
 - assert:
@@ -150,7 +156,7 @@
   go:
     state: present
     name: gopkg.in/yaml.v2
-    go_path: "{{ output_dir }}/go"
+    go_path: "{{ remote_tmp_dir }}/go"
   register: result
 
 - assert:
@@ -161,4 +167,4 @@
   go:
     state: absent
     name: gopkg.in/yaml.v2
-    go_path: "{{ output_dir }}/go"
+    go_path: "{{ remote_tmp_dir }}/go"

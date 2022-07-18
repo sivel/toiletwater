@@ -84,10 +84,17 @@ RETURN = '''#
 '''
 
 import json
+import re
 import shutil
 
 from ansible.module_utils._text import to_native
 from ansible.module_utils.basic import AnsibleModule, env_fallback
+
+
+DOWNLOAD_RE = re.compile(
+    r'(^go: downloading|\(download\)$)',
+    flags=re.M
+)
 
 
 def install(module):
@@ -110,9 +117,9 @@ def install(module):
 
     rc, stdout, stderr = module.run_command(cmd)
 
-    # When ``got get`` is run in verbose mode, if the package was installed/updated
+    # When ``go get`` is run in verbose mode, if the package was installed/updated
     # stderr should end with ``(download)\n``
-    changed = stderr and not stderr.endswith('(download)\n')
+    changed = bool(stderr and DOWNLOAD_RE.search(stderr))
 
     exit_args = {
         'rc': rc,
@@ -211,7 +218,7 @@ def main():
             go_path=dict(type='path', fallback=(env_fallback, ['GOPATH'])),
         )
     )
-    env = dict(LANG='C', LC_ALL='C', LC_MESSAGES='C', LC_CTYPE='C')
+    env = dict(LANG='C', LC_ALL='C', LC_MESSAGES='C', LC_CTYPE='C', GO111MODULE='off')
     if module.params['go_path']:
         env['GOPATH'] = module.params['go_path']
 

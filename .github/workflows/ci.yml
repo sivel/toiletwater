@@ -115,6 +115,13 @@ jobs:
           ansible-test env
         working-directory: ./ansible_collections/sivel/toiletwater
 
+      - name: locale
+        run: |
+          locale -a
+          locale
+          env
+        working-directory: ./ansible_collections/sivel/toiletwater
+
       - name: Run integration tests
         run: |
           ansible-test integration --docker ${{ matrix.os }} -v
