@@ -7,7 +7,7 @@ from __future__ import (absolute_import, division, print_function)
 __metaclass__ = type
 
 DOCUMENTATION = '''
-    callback: cprofile
+    name: cprofile
     short_description: Uses cProfile to profile the python execution of ansible
     description:
         - Uses cProfile to profile the python execution of ansible, allowing
@@ -25,6 +25,16 @@ DOCUMENTATION = '''
           - key: filters
             section: cprofile_callback
         type: list
+        elements: str
+      limit:
+        description: limit the output to the top N profile results. Defaults to no limit
+        default: -1
+        env:
+          - name: CPROFILE_LIMIT
+        ini:
+          - key: limit
+            section: cprofile_callback
+        type: int
       sort:
         description: Sort order of cProfile output
         default:
@@ -35,6 +45,7 @@ DOCUMENTATION = '''
           - key: sort
             section: cprofile_callback
         type: list
+        elements: str
       strip_dirs:
         description: Whether or not to display stripped paths instead of full
                      paths. This functionality differs slightly from the native
@@ -56,6 +67,15 @@ DOCUMENTATION = '''
           - key: per_host_task
             section: cprofile_callback
         type: bool
+      profile_forks:
+        description: Whether to profile code executed in forks
+        default: True
+        env:
+          - name: CPROFILE_PROFILE_FORKS
+        ini:
+          - key: profile_forks
+            section: cprofile_callback
+        type: bool
 '''
 
 import cProfile
@@ -67,7 +87,6 @@ import pstats
 import shutil
 import tempfile
 import time
-from contextlib import contextmanager
 from glob import iglob
 
 try:
@@ -80,6 +99,12 @@ from ansible.executor.process.worker import WorkerProcess
 from ansible.module_utils.six import PY3
 from ansible.playbook.block import Block
 from ansible.plugins.callback import CallbackBase
+
+try:
+    import importlib.util
+except ImportError:
+    # Handled by PY3 check later
+    pass
 
 
 VALID_SORTS = frozenset(pstats.Stats.sort_arg_dict_default.keys())
@@ -111,7 +136,7 @@ def find_module(module):
     spec = importlib.util.find_spec(module)
     if not spec:
         raise ImportError(module)
-    if os.path.splitext(spec.origin)[1] == '.py':
+    if os.path.basename(spec.origin) == '__init__.py':
         return os.path.dirname(spec.origin)
     return spec.origin
 
@@ -178,10 +203,11 @@ class CallbackModule(CallbackBase):
         else:
             self._worker_tmp = tempfile.mkdtemp()
 
-            WorkerProcess.run = self._profile_worker(WorkerProcess.run)
-
             self._p = cProfile.Profile()
             self._p.enable()
+
+    def _wrap_worker(self):
+        WorkerProcess.run = self._profile_worker(WorkerProcess.run)
 
     def _profile_worker(self, func):
         """Closure for profiling ``WorkerProcess.run`` with ``cProfile``
@@ -230,6 +256,10 @@ class CallbackModule(CallbackBase):
         sort = self.get_option('sort')
         strip_dirs = self.get_option('strip_dirs')
         self._per_host_task = self.get_option('per_host_task')
+        self._limit = self.get_option('limit')
+
+        if self.get_option('profile_forks'):
+            self._wrap_worker()
 
         if any(filters):
             self._filters = []
@@ -266,7 +296,7 @@ class CallbackModule(CallbackBase):
             if self._strip_dirs:
                 strip_filter(ps, self._filters)
             self._display.banner('Control')
-            ps.sort_stats(*self._sort).print_stats()
+            ps.sort_stats(*self._sort).print_stats(self._limit)
 
             for item in iglob('%s/*.pstat' % tmp):
                 ps = load_stats(item)
@@ -279,7 +309,7 @@ class CallbackModule(CallbackBase):
                 self._display.banner(
                     '%(play)s - %(task_name)s - %(host)s' % data
                 )
-                ps.sort_stats(*self._sort).print_stats()
+                ps.sort_stats(*self._sort).print_stats(self._limit)
         else:
             ps = pstats.Stats(self._p)
             ps.add(
@@ -295,7 +325,7 @@ class CallbackModule(CallbackBase):
             if self._strip_dirs:
                 strip_filter(ps, self._filters)
             self._display.banner('Profile')
-            ps.sort_stats(*self._sort).print_stats()
+            ps.sort_stats(*self._sort).print_stats(self._limit)
 
         try:
             shutil.rmtree(tmp)

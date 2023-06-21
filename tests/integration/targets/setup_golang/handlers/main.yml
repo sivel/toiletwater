@@ -1,5 +1,0 @@
-- name: Uninstall golang
-  package:
-    name: golang
-    state: absent
-    autoremove: yes

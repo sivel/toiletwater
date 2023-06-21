@@ -30,6 +30,10 @@ This repo is an Ansible collection containing some of my own Ansible plugins tha
 
 * `cert_locations` - Report CA cert locations used by Ansible
 
+#### files
+
+* `substring` - Search for substring in file
+
 ### Callback
 
 * `dump_stats` - Callback to dump to stats from `set_stat` to a JSON file

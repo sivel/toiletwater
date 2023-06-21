@@ -7,7 +7,7 @@ from __future__ import (absolute_import, division, print_function)
 __metaclass__ = type
 
 DOCUMENTATION = '''
-    callback: dump_stats
+    name: dump_stats
     short_description: Callback to dump to stats from set_stat to a JSON file
     description:
         - Dumps the stats from set_stat to a JSON file that can be fed to subsequent
@@ -31,7 +31,6 @@ DOCUMENTATION = '''
 import json
 import os
 
-from ansible.errors import AnsibleError
 from ansible.plugins.callback import CallbackBase
 
 

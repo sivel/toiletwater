@@ -1,6 +1,6 @@
 namespace: "sivel"
 name: "toiletwater"
-version: "0.0.10"
+version: "0.0.11"
 readme: "README.md"
 authors:
     - "sivel <matt@sivel.net>"

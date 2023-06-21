@@ -1,0 +1,358 @@
+jq_input:
+  - author:
+      avatar_url: https://avatars0.githubusercontent.com/u/5635139?v=4
+      events_url: https://api.github.com/users/max-sixty/events{/privacy}
+      followers_url: https://api.github.com/users/max-sixty/followers
+      following_url: https://api.github.com/users/max-sixty/following{/other_user}
+      gists_url: https://api.github.com/users/max-sixty/gists{/gist_id}
+      gravatar_id: ''
+      html_url: https://github.com/max-sixty
+      id: 5635139
+      login: max-sixty
+      node_id: MDQ6VXNlcjU2MzUxMzk=
+      organizations_url: https://api.github.com/users/max-sixty/orgs
+      received_events_url: https://api.github.com/users/max-sixty/received_events
+      repos_url: https://api.github.com/users/max-sixty/repos
+      site_admin: false
+      starred_url: https://api.github.com/users/max-sixty/starred{/owner}{/repo}
+      subscriptions_url: https://api.github.com/users/max-sixty/subscriptions
+      type: User
+      url: https://api.github.com/users/max-sixty
+    comments_url: https://api.github.com/repos/stedolan/jq/commits/a17dd3248a666d01be75f6b16be37e80e20b0954/comments
+    commit:
+      author:
+        date: '2020-03-29T21:40:42Z'
+        email: 5635139+max-sixty@users.noreply.github.com
+        name: Maximilian Roos
+      comment_count: 0
+      committer:
+        date: '2020-06-08T16:35:13Z'
+        email: wlangfor@gmail.com
+        name: William Langford
+      message: Add some missing code quoting to the manual
+      tree:
+        sha: 53eb4bc72594be6cd3847450cd3d3e06246199cd
+        url: https://api.github.com/repos/stedolan/jq/git/trees/53eb4bc72594be6cd3847450cd3d3e06246199cd
+      url: https://api.github.com/repos/stedolan/jq/git/commits/a17dd3248a666d01be75f6b16be37e80e20b0954
+      verification:
+        payload: null
+        reason: unsigned
+        signature: null
+        verified: false
+    committer:
+      avatar_url: https://avatars2.githubusercontent.com/u/3422295?v=4
+      events_url: https://api.github.com/users/wtlangford/events{/privacy}
+      followers_url: https://api.github.com/users/wtlangford/followers
+      following_url: https://api.github.com/users/wtlangford/following{/other_user}
+      gists_url: https://api.github.com/users/wtlangford/gists{/gist_id}
+      gravatar_id: ''
+      html_url: https://github.com/wtlangford
+      id: 3422295
+      login: wtlangford
+      node_id: MDQ6VXNlcjM0MjIyOTU=
+      organizations_url: https://api.github.com/users/wtlangford/orgs
+      received_events_url: https://api.github.com/users/wtlangford/received_events
+      repos_url: https://api.github.com/users/wtlangford/repos
+      site_admin: false
+      starred_url: https://api.github.com/users/wtlangford/starred{/owner}{/repo}
+      subscriptions_url: https://api.github.com/users/wtlangford/subscriptions
+      type: User
+      url: https://api.github.com/users/wtlangford
+    html_url: https://github.com/stedolan/jq/commit/a17dd3248a666d01be75f6b16be37e80e20b0954
+    node_id: MDY6Q29tbWl0NTEwMTE0MTphMTdkZDMyNDhhNjY2ZDAxYmU3NWY2YjE2YmUzN2U4MGUyMGIwOTU0
+    parents:
+      - html_url: https://github.com/stedolan/jq/commit/6306ac89667cf35f47ddc40aa0630546c57e387f
+        sha: 6306ac89667cf35f47ddc40aa0630546c57e387f
+        url: https://api.github.com/repos/stedolan/jq/commits/6306ac89667cf35f47ddc40aa0630546c57e387f
+    sha: a17dd3248a666d01be75f6b16be37e80e20b0954
+    url: https://api.github.com/repos/stedolan/jq/commits/a17dd3248a666d01be75f6b16be37e80e20b0954
+  - author:
+      avatar_url: https://avatars2.githubusercontent.com/u/375258?v=4
+      events_url: https://api.github.com/users/itchyny/events{/privacy}
+      followers_url: https://api.github.com/users/itchyny/followers
+      following_url: https://api.github.com/users/itchyny/following{/other_user}
+      gists_url: https://api.github.com/users/itchyny/gists{/gist_id}
+      gravatar_id: ''
+      html_url: https://github.com/itchyny
+      id: 375258
+      login: itchyny
+      node_id: MDQ6VXNlcjM3NTI1OA==
+      organizations_url: https://api.github.com/users/itchyny/orgs
+      received_events_url: https://api.github.com/users/itchyny/received_events
+      repos_url: https://api.github.com/users/itchyny/repos
+      site_admin: false
+      starred_url: https://api.github.com/users/itchyny/starred{/owner}{/repo}
+      subscriptions_url: https://api.github.com/users/itchyny/subscriptions
+      type: User
+      url: https://api.github.com/users/itchyny
+    comments_url: https://api.github.com/repos/stedolan/jq/commits/6306ac89667cf35f47ddc40aa0630546c57e387f/comments
+    commit:
+      author:
+        date: '2020-05-09T01:39:38Z'
+        email: itchyny@hatena.ne.jp
+        name: itchyny
+      comment_count: 0
+      committer:
+        date: '2020-05-26T16:30:27Z'
+        email: wlangfor@gmail.com
+        name: William Langford
+      message: Reduce allocation on string multiplication
+      tree:
+        sha: 6bbbd60758a976421e85d3a7053ce1be9c27d19b
+        url: https://api.github.com/repos/stedolan/jq/git/trees/6bbbd60758a976421e85d3a7053ce1be9c27d19b
+      url: https://api.github.com/repos/stedolan/jq/git/commits/6306ac89667cf35f47ddc40aa0630546c57e387f
+      verification:
+        payload: null
+        reason: unsigned
+        signature: null
+        verified: false
+    committer:
+      avatar_url: https://avatars2.githubusercontent.com/u/3422295?v=4
+      events_url: https://api.github.com/users/wtlangford/events{/privacy}
+      followers_url: https://api.github.com/users/wtlangford/followers
+      following_url: https://api.github.com/users/wtlangford/following{/other_user}
+      gists_url: https://api.github.com/users/wtlangford/gists{/gist_id}
+      gravatar_id: ''
+      html_url: https://github.com/wtlangford
+      id: 3422295
+      login: wtlangford
+      node_id: MDQ6VXNlcjM0MjIyOTU=
+      organizations_url: https://api.github.com/users/wtlangford/orgs
+      received_events_url: https://api.github.com/users/wtlangford/received_events
+      repos_url: https://api.github.com/users/wtlangford/repos
+      site_admin: false
+      starred_url: https://api.github.com/users/wtlangford/starred{/owner}{/repo}
+      subscriptions_url: https://api.github.com/users/wtlangford/subscriptions
+      type: User
+      url: https://api.github.com/users/wtlangford
+    html_url: https://github.com/stedolan/jq/commit/6306ac89667cf35f47ddc40aa0630546c57e387f
+    node_id: MDY6Q29tbWl0NTEwMTE0MTo2MzA2YWM4OTY2N2NmMzVmNDdkZGM0MGFhMDYzMDU0NmM1N2UzODdm
+    parents:
+      - html_url: https://github.com/stedolan/jq/commit/9163e09605383a88f6e953d6cb5cc2aebe18c84f
+        sha: 9163e09605383a88f6e953d6cb5cc2aebe18c84f
+        url: https://api.github.com/repos/stedolan/jq/commits/9163e09605383a88f6e953d6cb5cc2aebe18c84f
+    sha: 6306ac89667cf35f47ddc40aa0630546c57e387f
+    url: https://api.github.com/repos/stedolan/jq/commits/6306ac89667cf35f47ddc40aa0630546c57e387f
+  - author:
+      avatar_url: https://avatars2.githubusercontent.com/u/375258?v=4
+      events_url: https://api.github.com/users/itchyny/events{/privacy}
+      followers_url: https://api.github.com/users/itchyny/followers
+      following_url: https://api.github.com/users/itchyny/following{/other_user}
+      gists_url: https://api.github.com/users/itchyny/gists{/gist_id}
+      gravatar_id: ''
+      html_url: https://github.com/itchyny
+      id: 375258
+      login: itchyny
+      node_id: MDQ6VXNlcjM3NTI1OA==
+      organizations_url: https://api.github.com/users/itchyny/orgs
+      received_events_url: https://api.github.com/users/itchyny/received_events
+      repos_url: https://api.github.com/users/itchyny/repos
+      site_admin: false
+      starred_url: https://api.github.com/users/itchyny/starred{/owner}{/repo}
+      subscriptions_url: https://api.github.com/users/itchyny/subscriptions
+      type: User
+      url: https://api.github.com/users/itchyny
+    comments_url: https://api.github.com/repos/stedolan/jq/commits/9163e09605383a88f6e953d6cb5cc2aebe18c84f/comments
+    commit:
+      author:
+        date: '2020-05-08T05:22:25Z'
+        email: itchyny@hatena.ne.jp
+        name: itchyny
+      comment_count: 0
+      committer:
+        date: '2020-05-26T16:30:27Z'
+        email: wlangfor@gmail.com
+        name: William Langford
+      message: Fix multiple string multiplication
+      tree:
+        sha: d580cd0089241528805e6ce7dbb89675a66a8ded
+        url: https://api.github.com/repos/stedolan/jq/git/trees/d580cd0089241528805e6ce7dbb89675a66a8ded
+      url: https://api.github.com/repos/stedolan/jq/git/commits/9163e09605383a88f6e953d6cb5cc2aebe18c84f
+      verification:
+        payload: null
+        reason: unsigned
+        signature: null
+        verified: false
+    committer:
+      avatar_url: https://avatars2.githubusercontent.com/u/3422295?v=4
+      events_url: https://api.github.com/users/wtlangford/events{/privacy}
+      followers_url: https://api.github.com/users/wtlangford/followers
+      following_url: https://api.github.com/users/wtlangford/following{/other_user}
+      gists_url: https://api.github.com/users/wtlangford/gists{/gist_id}
+      gravatar_id: ''
+      html_url: https://github.com/wtlangford
+      id: 3422295
+      login: wtlangford
+      node_id: MDQ6VXNlcjM0MjIyOTU=
+      organizations_url: https://api.github.com/users/wtlangford/orgs
+      received_events_url: https://api.github.com/users/wtlangford/received_events
+      repos_url: https://api.github.com/users/wtlangford/repos
+      site_admin: false
+      starred_url: https://api.github.com/users/wtlangford/starred{/owner}{/repo}
+      subscriptions_url: https://api.github.com/users/wtlangford/subscriptions
+      type: User
+      url: https://api.github.com/users/wtlangford
+    html_url: https://github.com/stedolan/jq/commit/9163e09605383a88f6e953d6cb5cc2aebe18c84f
+    node_id: MDY6Q29tbWl0NTEwMTE0MTo5MTYzZTA5NjA1MzgzYTg4ZjZlOTUzZDZjYjVjYzJhZWJlMThjODRm
+    parents:
+      - html_url: https://github.com/stedolan/jq/commit/15fa1dec99f2a709dd6c3ee9791af4a9f72b4a83
+        sha: 15fa1dec99f2a709dd6c3ee9791af4a9f72b4a83
+        url: https://api.github.com/repos/stedolan/jq/commits/15fa1dec99f2a709dd6c3ee9791af4a9f72b4a83
+    sha: 9163e09605383a88f6e953d6cb5cc2aebe18c84f
+    url: https://api.github.com/repos/stedolan/jq/commits/9163e09605383a88f6e953d6cb5cc2aebe18c84f
+  - author:
+      avatar_url: https://avatars2.githubusercontent.com/u/375258?v=4
+      events_url: https://api.github.com/users/itchyny/events{/privacy}
+      followers_url: https://api.github.com/users/itchyny/followers
+      following_url: https://api.github.com/users/itchyny/following{/other_user}
+      gists_url: https://api.github.com/users/itchyny/gists{/gist_id}
+      gravatar_id: ''
+      html_url: https://github.com/itchyny
+      id: 375258
+      login: itchyny
+      node_id: MDQ6VXNlcjM3NTI1OA==
+      organizations_url: https://api.github.com/users/itchyny/orgs
+      received_events_url: https://api.github.com/users/itchyny/received_events
+      repos_url: https://api.github.com/users/itchyny/repos
+      site_admin: false
+      starred_url: https://api.github.com/users/itchyny/starred{/owner}{/repo}
+      subscriptions_url: https://api.github.com/users/itchyny/subscriptions
+      type: User
+      url: https://api.github.com/users/itchyny
+    comments_url: https://api.github.com/repos/stedolan/jq/commits/15fa1dec99f2a709dd6c3ee9791af4a9f72b4a83/comments
+    commit:
+      author:
+        date: '2020-05-13T03:09:53Z'
+        email: itchyny@hatena.ne.jp
+        name: itchyny
+      comment_count: 0
+      committer:
+        date: '2020-05-26T16:29:34Z'
+        email: wlangfor@gmail.com
+        name: William Langford
+      message: Fix error handling in strftime
+      tree:
+        sha: 83070d1a9ac4fdcb5648a888d7f0e77362b6ec48
+        url: https://api.github.com/repos/stedolan/jq/git/trees/83070d1a9ac4fdcb5648a888d7f0e77362b6ec48
+      url: https://api.github.com/repos/stedolan/jq/git/commits/15fa1dec99f2a709dd6c3ee9791af4a9f72b4a83
+      verification:
+        payload: null
+        reason: unsigned
+        signature: null
+        verified: false
+    committer:
+      avatar_url: https://avatars2.githubusercontent.com/u/3422295?v=4
+      events_url: https://api.github.com/users/wtlangford/events{/privacy}
+      followers_url: https://api.github.com/users/wtlangford/followers
+      following_url: https://api.github.com/users/wtlangford/following{/other_user}
+      gists_url: https://api.github.com/users/wtlangford/gists{/gist_id}
+      gravatar_id: ''
+      html_url: https://github.com/wtlangford
+      id: 3422295
+      login: wtlangford
+      node_id: MDQ6VXNlcjM0MjIyOTU=
+      organizations_url: https://api.github.com/users/wtlangford/orgs
+      received_events_url: https://api.github.com/users/wtlangford/received_events
+      repos_url: https://api.github.com/users/wtlangford/repos
+      site_admin: false
+      starred_url: https://api.github.com/users/wtlangford/starred{/owner}{/repo}
+      subscriptions_url: https://api.github.com/users/wtlangford/subscriptions
+      type: User
+      url: https://api.github.com/users/wtlangford
+    html_url: https://github.com/stedolan/jq/commit/15fa1dec99f2a709dd6c3ee9791af4a9f72b4a83
+    node_id: MDY6Q29tbWl0NTEwMTE0MToxNWZhMWRlYzk5ZjJhNzA5ZGQ2YzNlZTk3OTFhZjRhOWY3MmI0YTgz
+    parents:
+      - html_url: https://github.com/stedolan/jq/commit/ccc79e592cfe1172db5f2def5a24c2f7cfd418bf
+        sha: ccc79e592cfe1172db5f2def5a24c2f7cfd418bf
+        url: https://api.github.com/repos/stedolan/jq/commits/ccc79e592cfe1172db5f2def5a24c2f7cfd418bf
+    sha: 15fa1dec99f2a709dd6c3ee9791af4a9f72b4a83
+    url: https://api.github.com/repos/stedolan/jq/commits/15fa1dec99f2a709dd6c3ee9791af4a9f72b4a83
+  - author:
+      avatar_url: https://avatars0.githubusercontent.com/u/8345542?v=4
+      events_url: https://api.github.com/users/1480c1/events{/privacy}
+      followers_url: https://api.github.com/users/1480c1/followers
+      following_url: https://api.github.com/users/1480c1/following{/other_user}
+      gists_url: https://api.github.com/users/1480c1/gists{/gist_id}
+      gravatar_id: ''
+      html_url: https://github.com/1480c1
+      id: 8345542
+      login: 1480c1
+      node_id: MDQ6VXNlcjgzNDU1NDI=
+      organizations_url: https://api.github.com/users/1480c1/orgs
+      received_events_url: https://api.github.com/users/1480c1/received_events
+      repos_url: https://api.github.com/users/1480c1/repos
+      site_admin: false
+      starred_url: https://api.github.com/users/1480c1/starred{/owner}{/repo}
+      subscriptions_url: https://api.github.com/users/1480c1/subscriptions
+      type: User
+      url: https://api.github.com/users/1480c1
+    comments_url: https://api.github.com/repos/stedolan/jq/commits/ccc79e592cfe1172db5f2def5a24c2f7cfd418bf/comments
+    commit:
+      author:
+        date: '2020-03-03T16:23:45Z'
+        email: ccom@randomderp.com
+        name: Christopher Degawa
+      comment_count: 0
+      committer:
+        date: '2020-03-03T16:50:04Z'
+        email: wlangfor@gmail.com
+        name: William Langford
+      message: 'Makefile: prepend srcdir to jq.1.prebuilt to fix out of source compilation'
+      tree:
+        sha: aee535a3870e6990f8ec6d7e0b9909ea2e7070f8
+        url: https://api.github.com/repos/stedolan/jq/git/trees/aee535a3870e6990f8ec6d7e0b9909ea2e7070f8
+      url: https://api.github.com/repos/stedolan/jq/git/commits/ccc79e592cfe1172db5f2def5a24c2f7cfd418bf
+      verification:
+        payload: null
+        reason: unsigned
+        signature: null
+        verified: false
+    committer:
+      avatar_url: https://avatars2.githubusercontent.com/u/3422295?v=4
+      events_url: https://api.github.com/users/wtlangford/events{/privacy}
+      followers_url: https://api.github.com/users/wtlangford/followers
+      following_url: https://api.github.com/users/wtlangford/following{/other_user}
+      gists_url: https://api.github.com/users/wtlangford/gists{/gist_id}
+      gravatar_id: ''
+      html_url: https://github.com/wtlangford
+      id: 3422295
+      login: wtlangford
+      node_id: MDQ6VXNlcjM0MjIyOTU=
+      organizations_url: https://api.github.com/users/wtlangford/orgs
+      received_events_url: https://api.github.com/users/wtlangford/received_events
+      repos_url: https://api.github.com/users/wtlangford/repos
+      site_admin: false
+      starred_url: https://api.github.com/users/wtlangford/starred{/owner}{/repo}
+      subscriptions_url: https://api.github.com/users/wtlangford/subscriptions
+      type: User
+      url: https://api.github.com/users/wtlangford
+    html_url: https://github.com/stedolan/jq/commit/ccc79e592cfe1172db5f2def5a24c2f7cfd418bf
+    node_id: MDY6Q29tbWl0NTEwMTE0MTpjY2M3OWU1OTJjZmUxMTcyZGI1ZjJkZWY1YTI0YzJmN2NmZDQxOGJm
+    parents:
+      - html_url: https://github.com/stedolan/jq/commit/50a7022ea68fb37faefdcd7a35661df72fbfd655
+        sha: 50a7022ea68fb37faefdcd7a35661df72fbfd655
+        url: https://api.github.com/repos/stedolan/jq/commits/50a7022ea68fb37faefdcd7a35661df72fbfd655
+    sha: ccc79e592cfe1172db5f2def5a24c2f7cfd418bf
+    url: https://api.github.com/repos/stedolan/jq/commits/ccc79e592cfe1172db5f2def5a24c2f7cfd418bf
+
+jq_expected_output:
+  - message: Add some missing code quoting to the manual
+    name: William Langford
+    parents:
+      - https://github.com/stedolan/jq/commit/6306ac89667cf35f47ddc40aa0630546c57e387f
+  - message: Reduce allocation on string multiplication
+    name: William Langford
+    parents:
+      - https://github.com/stedolan/jq/commit/9163e09605383a88f6e953d6cb5cc2aebe18c84f
+  - message: Fix multiple string multiplication
+    name: William Langford
+    parents:
+      - https://github.com/stedolan/jq/commit/15fa1dec99f2a709dd6c3ee9791af4a9f72b4a83
+  - message: Fix error handling in strftime
+    name: William Langford
+    parents:
+      - https://github.com/stedolan/jq/commit/ccc79e592cfe1172db5f2def5a24c2f7cfd418bf
+  - message: 'Makefile: prepend srcdir to jq.1.prebuilt to fix out of source compilation'
+    name: William Langford
+    parents:
+      - https://github.com/stedolan/jq/commit/50a7022ea68fb37faefdcd7a35661df72fbfd655

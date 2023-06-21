@@ -1,0 +1,9 @@
+- hosts: localhost
+  gather_facts: false
+  tasks:
+    - substring:
+        path: '{{ playbook_dir }}/LICENSE'
+        pattern: '(?i)(?P<key>license)'
+        all: false
+        scope: line
+      register: substring_first_line

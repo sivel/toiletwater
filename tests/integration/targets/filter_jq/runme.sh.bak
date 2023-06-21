@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+set -eux
+export ANSIBLE_ROLES_PATH=../
+
+source virtualenv.sh
+
+ansible localhost -m import_role -a name=setup_jq
+ansible localhost -m import_role -a name=filter_jq

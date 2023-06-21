@@ -25,10 +25,10 @@ jobs:
         with:
           path: ansible_collections/sivel/toiletwater
 
-      - name: Set up Python 3.9
+      - name: Set up Python 3.11
         uses: actions/setup-python@v2
         with:
-          python-version: 3.9
+          python-version: 3.11
 
       - name: Install ansible ${{ matrix.ansible.name }}
         run: |
@@ -54,19 +54,17 @@ jobs:
           - name: devel
             package: https://github.com/ansible/ansible/archive/devel.tar.gz
         python-version:
-          - 3.8
-          - 3.9
-          - "3.10"
+          - 3.11
     steps:
       - name: Check out code
         uses: actions/checkout@v2
         with:
           path: ansible_collections/sivel/toiletwater
 
-      - name: Set up Python 3.9
+      - name: Set up Python 3.11
         uses: actions/setup-python@v2
         with:
-          python-version: 3.9
+          python-version: 3.11
 
       - name: Install ansible ${{ matrix.ansible.name }}
         run: |
@@ -92,18 +90,17 @@ jobs:
           - name: devel
             package: https://github.com/ansible/ansible/archive/devel.tar.gz
         os:
-          - fedora35
-          - ubuntu2004
+          - fedora37
     steps:
       - name: Check out code
         uses: actions/checkout@v2
         with:
           path: ansible_collections/sivel/toiletwater
 
-      - name: Set up Python 3.9
+      - name: Set up Python 3.11
         uses: actions/setup-python@v2
         with:
-          python-version: 3.9
+          python-version: 3.11
 
       - name: Install ansible ${{ matrix.ansible.name }}
         run: |
