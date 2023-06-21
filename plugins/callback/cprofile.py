@@ -129,7 +129,7 @@ def find_module(module):
     spec = importlib.util.find_spec(module)
     if not spec:
         raise ImportError(module)
-    if os.path.splitext(spec.origin)[1] == '.py':
+    if os.path.basename(spec.origin) == '__init__.py':
         return os.path.dirname(spec.origin)
     return spec.origin
 
