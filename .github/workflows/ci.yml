@@ -17,10 +17,6 @@ jobs:
     strategy:
       matrix:
         ansible:
-          - name: stable-2.9
-            package: ansible>=2.9,<2.10
-          - name: stable
-            package: ansible-base
           - name: devel
             package: https://github.com/ansible/ansible/archive/devel.tar.gz
     steps:
@@ -29,10 +25,10 @@ jobs:
         with:
           path: ansible_collections/sivel/toiletwater
 
-      - name: Set up Python 3.9
+      - name: Set up Python 3.11
         uses: actions/setup-python@v2
         with:
-          python-version: 3.9
+          python-version: 3.11
 
       - name: Install ansible ${{ matrix.ansible.name }}
         run: |
@@ -55,34 +51,20 @@ jobs:
     strategy:
       matrix:
         ansible:
-          - name: stable-2.9
-            package: ansible>=2.9,<2.10
-          - name: stable
-            package: ansible-base
           - name: devel
             package: https://github.com/ansible/ansible/archive/devel.tar.gz
         python-version:
-          - 2.7
-          - 3.5
-          - 3.6
-          - 3.7
-          - 3.8
-          - 3.9
-        exclude:
-          - ansible:
-              name: stable-2.9
-              package: ansible>=2.9,<2.10
-            python-version: 3.9
+          - 3.11
     steps:
       - name: Check out code
         uses: actions/checkout@v2
         with:
           path: ansible_collections/sivel/toiletwater
 
-      - name: Set up Python 3.9
+      - name: Set up Python 3.11
         uses: actions/setup-python@v2
         with:
-          python-version: 3.9
+          python-version: 3.11
 
       - name: Install ansible ${{ matrix.ansible.name }}
         run: |
@@ -105,26 +87,20 @@ jobs:
     strategy:
       matrix:
         ansible:
-          - name: stable-2.9
-            package: ansible>=2.9,<2.10
-          - name: stable
-            package: ansible-base
           - name: devel
             package: https://github.com/ansible/ansible/archive/devel.tar.gz
         os:
-          - centos7
-          - centos8
-          - ubuntu1804
+          - fedora37
     steps:
       - name: Check out code
         uses: actions/checkout@v2
         with:
           path: ansible_collections/sivel/toiletwater
 
-      - name: Set up Python 3.9
+      - name: Set up Python 3.11
         uses: actions/setup-python@v2
         with:
-          python-version: 3.9
+          python-version: 3.11
 
       - name: Install ansible ${{ matrix.ansible.name }}
         run: |
