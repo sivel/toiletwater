@@ -7,7 +7,7 @@ from __future__ import (absolute_import, division, print_function)
 __metaclass__ = type
 
 DOCUMENTATION = '''
-    callback: cprofile
+    name: cprofile
     short_description: Uses cProfile to profile the python execution of ansible
     description:
         - Uses cProfile to profile the python execution of ansible, allowing
@@ -25,6 +25,7 @@ DOCUMENTATION = '''
           - key: filters
             section: cprofile_callback
         type: list
+        elements: str
       limit:
         description: limit the output to the top N profile results. Defaults to no limit
         default: -1
@@ -44,6 +45,7 @@ DOCUMENTATION = '''
           - key: sort
             section: cprofile_callback
         type: list
+        elements: str
       strip_dirs:
         description: Whether or not to display stripped paths instead of full
                      paths. This functionality differs slightly from the native
