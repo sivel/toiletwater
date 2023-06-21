@@ -90,7 +90,7 @@ jobs:
           - name: devel
             package: https://github.com/ansible/ansible/archive/devel.tar.gz
         os:
-          - fedora37
+          - alpine3
     steps:
       - name: Check out code
         uses: actions/checkout@v2
