@@ -1,0 +1,11 @@
+- set_fact:
+    jq_output: '{{ jq_input|sivel.toiletwater.jq(expr) }}'
+  vars:
+    expr: '[.[] | {message: .commit.message, name: .commit.committer.name, parents: [.parents[].html_url]}]'
+
+- assert:
+    that:
+      - jq_output == jq_expected_output
+      - jq_input|sivel.toiletwater.jq(".") == jq_input
+      - jq_input|sivel.toiletwater.jq(".", multiple=True) == [jq_input]
+      - jq_input|sivel.toiletwater.jq(".", text=True)|from_json == jq_input
