@@ -1,6 +1,0 @@
-- name: Install golang
-  package:
-    name: golang
-    state: present
-  notify:
-    - Uninstall golang
