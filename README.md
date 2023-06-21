@@ -22,10 +22,6 @@ This repo is an Ansible collection containing some of my own Ansible plugins tha
 
 * `speedtest` - Tests internet bandwidth using speedtest.net
 
-#### packaging
-
-* `go` - Manage Golang packages
-
 #### system
 
 * `cert_locations` - Report CA cert locations used by Ansible
