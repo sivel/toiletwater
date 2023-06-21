@@ -34,7 +34,7 @@ max_pool_size = 30
 
 @pytest.mark.skipif(OrderedDict is dict, reason="requires python2.7 or higher")
 def test_to_toml():
-    assert toml.toml.loads(toml.to_toml(dict_data)) == dict_data
+    assert toml.toml_loads(toml.to_toml(dict_data)) == dict_data
 
 
 def test_from_toml():
