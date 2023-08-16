@@ -12,6 +12,12 @@ DOCUMENTATION = '''
     description:
         - Uses cProfile to profile the python execution of ansible, allowing
           for filtering and sorting
+    notes:
+        - >-
+          To hook into the execution earlier, make use of the
+          C(sivel.toiletwater.cprofile) inventory plugin via an inventory plugin
+          configuration of C(plugin: sivel.toiletwater.cprofile) and supply
+          ansible with that as an inventory file.
     type: aggregate
     options:
       filters:
@@ -194,6 +200,8 @@ class CallbackModule(CallbackBase):
     CALLBACK_NAME = 'sivel.toiletwater.cprofile'
     CALLBACK_NEEDS_WHITELIST = True
 
+    _p = None
+
     def __init__(self, display=None):
         super(CallbackModule, self).__init__(display)
 
@@ -203,8 +211,9 @@ class CallbackModule(CallbackBase):
         else:
             self._worker_tmp = tempfile.mkdtemp()
 
-            self._p = cProfile.Profile()
-            self._p.enable()
+            if not self._p:
+                self._p = cProfile.Profile()
+                self._p.enable()
 
     def _wrap_worker(self):
         WorkerProcess.run = self._profile_worker(WorkerProcess.run)
