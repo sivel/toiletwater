@@ -34,3 +34,7 @@ This repo is an Ansible collection containing some of my own Ansible plugins tha
 
 * `dump_stats` - Callback to dump to stats from `set_stat` to a JSON file
 * `cprofile` - Uses `cProfile` to profile the python execution of ansible
+
+### Inventory
+
+* `cprofile` - Noop inventory plugin used to enable cProfile as early as possible
