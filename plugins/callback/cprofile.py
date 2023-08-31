@@ -14,15 +14,20 @@ DOCUMENTATION = '''
           for filtering and sorting
     notes:
         - >-
-          To hook into the execution earlier, make use of the
-          C(sivel.toiletwater.cprofile) inventory plugin via an inventory plugin
-          configuration of C(plugin: sivel.toiletwater.cprofile) and supply
-          ansible with that as an inventory file.
+          To hook into the execution as early as possible, invoke ansible using
+          C(python -m cProfile -m ansible). If this is not possible, make use
+          of the C(sivel.toiletwater.cprofile) inventory plugin via an
+          inventory plugin configuration of
+          C(plugin: sivel.toiletwater.cprofile) and supply ansible with that as
+          an inventory file.
     type: aggregate
     options:
       filters:
         description: A list of python packages to limit output to,
-                     e.g. C(ansible.plugins.connection)
+                     e.g. C(ansible.plugins.connection), can also
+                     specify C(builtins) to filter on python builtins,
+                     and also C(function:my_function) to filter on specific
+                     non-qualified function names.
         default:
           - ansible
         env:
@@ -33,7 +38,8 @@ DOCUMENTATION = '''
         type: list
         elements: str
       limit:
-        description: limit the output to the top N profile results. Defaults to no limit
+        description: limit the output to the top N profile results. Defaults
+                     to no limit
         default: -1
         env:
           - name: CPROFILE_LIMIT
@@ -84,6 +90,7 @@ DOCUMENTATION = '''
         type: bool
 '''
 
+import _lsprof
 import cProfile
 import functools
 import json
@@ -91,16 +98,13 @@ import os
 import pickle
 import pstats
 import shutil
+import sys
 import tempfile
 import time
 from glob import iglob
 
-try:
-    import importlib.util
-except ImportError:
-    # Handled by PY3 check later
-    pass
-
+import ansible
+from ansible.compat.importlib_resources import files
 from ansible.errors import AnsibleError
 from ansible.executor.process.worker import WorkerProcess
 from ansible.module_utils.six import PY3
@@ -134,12 +138,13 @@ def load_stats(filename):
 
 def find_module(module):
     """Find the path to a dotted python module"""
-    spec = importlib.util.find_spec(module)
-    if not spec:
-        raise ImportError(module)
-    if os.path.basename(spec.origin) == '__init__.py':
-        return os.path.dirname(spec.origin)
-    return spec.origin
+    path = files(module)
+    try:
+        # _AnsibleNSTraversable
+        return [str(p) for p in path._paths]
+    except AttributeError:
+        # assume this is just pathlib.Path
+        return [str(path)]
 
 
 def filter_pstats(ps, filters):
@@ -147,7 +152,15 @@ def filter_pstats(ps, filters):
     for stat in list(ps.stats):
         found = False
         for f in filters:
-            if stat[0].startswith(f):
+            if f == 'builtins' and stat[2].startswith('<built-in'):
+                found = True
+                break
+            elif (f.startswith('function:') and
+                    (function := f.split(':', 1)[1]) and
+                    stat[2] == function):
+                found = True
+                break
+            elif stat[0].startswith(f):
                 found = True
                 break
         if not found:
@@ -161,14 +174,15 @@ def filter_pstats(ps, filters):
 def strip_filter(ps, filters=None):
     """Strip the matching filter from the paths"""
     dirname = os.path.dirname
-    if filters:
-        path = '%s/' % os.path.commonpath(
-            [dirname(f) for f in filters]
-        )
-    else:
+    ansible_root = dirname(ansible.__file__)
+    try:
         path = '%s/' % os.path.commonpath(
             [dirname(key[0]) for key in ps.stats if key[0][0] == '/']
         )
+    except ValueError:
+        return ps
+    if path != ansible_root and path.startswith(ansible_root):
+        path = dirname(ansible_root) + '/'
 
     for stat, item in list(ps.stats.items()):
         index = stat[0].find(path)
@@ -195,8 +209,6 @@ class CallbackModule(CallbackBase):
     CALLBACK_NAME = 'sivel.toiletwater.cprofile'
     CALLBACK_NEEDS_WHITELIST = True
 
-    _p = None
-
     def __init__(self, display=None):
         super(CallbackModule, self).__init__(display)
 
@@ -206,9 +218,13 @@ class CallbackModule(CallbackBase):
         else:
             self._worker_tmp = tempfile.mkdtemp()
 
-            if not self._p:
-                self._p = cProfile.Profile()
-                self._p.enable()
+            p = sys.getprofile()
+            # Profiler may have been started by `python -m cProfile`
+            # or the cprofile inventory plugin
+            if not isinstance(p, _lsprof.Profiler):
+                p = cProfile.Profile()
+                p.enable()
+            self._p = p
 
     def _wrap_worker(self):
         WorkerProcess.run = self._profile_worker(WorkerProcess.run)
@@ -270,8 +286,12 @@ class CallbackModule(CallbackBase):
             for f in filters:
                 if not f:
                     continue
+                if f == 'builtins' or f.startswith('function:'):
+                    self._filters.append(f)
+                    continue
+                self._filters.append(f'<frozen {f}')
                 try:
-                    self._filters.append(find_module(f))
+                    self._filters.extend(find_module(f))
                 except ImportError as e:
                     raise AnsibleError(
                         'Invalid cprofile callback filter %s: %s' % (f, e)
@@ -330,6 +350,10 @@ class CallbackModule(CallbackBase):
                 strip_filter(ps, self._filters)
             self._display.banner('Profile')
             ps.sort_stats(*self._sort).print_stats(self._limit)
+
+            # If profiling was started with `-m cProfile` there would be
+            # another print that happens at exit that we don't want
+            pstats.Stats.print_stats = lambda *args, **kwargs: None
 
         try:
             shutil.rmtree(tmp)

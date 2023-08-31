@@ -14,19 +14,22 @@ DOCUMENTATION = '''
         - Must be used with the C(sivel.toiletwater.cprofile) callback plugin
 '''
 
+import _lsprof
 import cProfile
+import sys
 
 from ansible.plugins.inventory import BaseInventoryPlugin
-from ansible.plugins.loader import callback_loader
 
 
 class InventoryModule(BaseInventoryPlugin):
     NAME = 'cprofile'
 
     def __init__(self):
-        cprofile_cb = callback_loader.get('sivel.toiletwater.cprofile', class_only=True)
-        cprofile_cb._p = p = cProfile.Profile()
-        p.enable()
+        p = sys.getprofile()
+        # Profiler may have been started by `python -m cProfile`
+        if not isinstance(p, _lsprof.Profiler):
+            p = cProfile.Profile()
+            p.enable()
         super().__init__()
 
     def verify_file(self, path):
