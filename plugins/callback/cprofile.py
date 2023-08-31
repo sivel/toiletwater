@@ -368,9 +368,9 @@ class CallbackModule(CallbackBase):
             self._display.banner('Profile')
             ps.sort_stats(*self._sort).print_stats(self._limit)
 
-            # If profiling was started with `-m cProfile` there would be
-            # another print that happens at exit that we don't want
-            pstats.Stats.print_stats = lambda *args, **kwargs: None
+        # If profiling was started with `-m cProfile` there would be
+        # another print that happens at exit that we don't want
+        pstats.Stats.print_stats = lambda *args, **kwargs: None
 
         try:
             shutil.rmtree(tmp)
