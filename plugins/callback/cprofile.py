@@ -103,6 +103,12 @@ import tempfile
 import time
 from glob import iglob
 
+try:
+    import importlib.util
+except ImportError:
+    # Handled by PY3 check later
+    pass
+
 import ansible
 from ansible.compat.importlib_resources import files
 from ansible.errors import AnsibleError
@@ -138,13 +144,22 @@ def load_stats(filename):
 
 def find_module(module):
     """Find the path to a dotted python module"""
-    path = files(module)
     try:
-        # _AnsibleNSTraversable
-        return [str(p) for p in path._paths]
-    except AttributeError:
-        # assume this is just pathlib.Path
-        return [str(path)]
+        path = files(module)
+    except (ImportError, TypeError):
+        spec = importlib.util.find_spec(module)
+        if not spec:
+            raise ImportError(module)
+        if os.path.basename(spec.origin) == '__init__.py':
+            return [os.path.dirname(spec.origin)]
+        return [spec.origin]
+    else:
+        try:
+            # _AnsibleNSTraversable
+            return [str(p) for p in path._paths]
+        except AttributeError:
+            # assume this is just pathlib.Path
+            return [str(path)]
 
 
 def filter_pstats(ps, filters):
@@ -292,7 +307,8 @@ class CallbackModule(CallbackBase):
                 self._filters.append(f'<frozen {f}')
                 try:
                     self._filters.extend(find_module(f))
-                except ImportError as e:
+                except Exception as e:
+                    self.disabled = True
                     raise AnsibleError(
                         'Invalid cprofile callback filter %s: %s' % (f, e)
                     )
@@ -304,6 +320,7 @@ class CallbackModule(CallbackBase):
 
         invalid = set(self._sort).difference(VALID_SORTS)
         if invalid:
+            self.disabled = True
             raise AnsibleError(
                 'Invalid cProfile sort: %s' % ', '.join(invalid)
             )
