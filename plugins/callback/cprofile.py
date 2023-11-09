@@ -110,13 +110,19 @@ except ImportError:
     pass
 
 import ansible
-from ansible.compat.importlib_resources import files
 from ansible.errors import AnsibleError
 from ansible.executor.process.worker import WorkerProcess
 from ansible.module_utils.six import PY3
 from ansible.playbook.block import Block
 from ansible.plugins.callback import CallbackBase
 
+try:
+    from ansible.compat.importlib_resources import files
+except ImportError:
+    files = None
+    HAS_IMPORTLIB_RESOURCES = False
+else:
+    HAS_IMPORTLIB_RESOURCES = True
 
 VALID_SORTS = frozenset(pstats.Stats.sort_arg_dict_default.keys())
 
