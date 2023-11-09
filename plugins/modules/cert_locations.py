@@ -26,28 +26,36 @@ EXAMPLES = r'''
     var: result
 '''
 
+import os
 import ssl
 
 from ansible.module_utils.basic import AnsibleModule
-from ansible.module_utils.urls import SSLValidationHandler
+try:
+    from ansible.module_utils.urls import SSLValidationHandler
+except ImportError:
+    from ansible.module_utils.urls import get_ca_certs
+else:
+    get_ca_certs = SSLValidationHandler(None, None).get_ca_certs
 
 
 def main():
     module = AnsibleModule({})
-    _d1, _d2, paths = SSLValidationHandler(None, None).get_ca_certs()
+    paths = get_ca_certs()[-1]
     try:
         default = ssl.get_default_verify_paths()
     except AttributeError:
         pass
     else:
         paths[0:0] = [
-            default.cafile,
+            default.capath or default.cafile
         ]
 
     seen = set()
     cleaned = []
     for path in paths:
         if not path or path in seen:
+            continue
+        if not os.path.exists(path):
             continue
         cleaned.append(path)
         seen.add(path)
