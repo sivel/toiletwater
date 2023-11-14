@@ -17,10 +17,10 @@ from ansible.module_utils.six import string_types
 from ansible.module_utils.six.moves import configparser, StringIO
 
 
-def from_ini(o):
+def from_ini(o, strict=True):
     if not isinstance(o, string_types):
         raise AnsibleFilterError('from_ini requires a string, got %s' % type(o))
-    parser = configparser.RawConfigParser()
+    parser = configparser.RawConfigParser(strict=strict)
     parser.optionxform = partial(to_text, errors='surrogate_or_strict')
     parser.readfp(StringIO(o))
     d = dict(parser._sections)
@@ -32,12 +32,12 @@ def from_ini(o):
     return d
 
 
-def to_ini(o):
+def to_ini(o, strict=True):
     if not isinstance(o, MutableMapping):
         raise AnsibleFilterError('to_ini requires a dict, got %s' % type(o))
     data = copy.deepcopy(o)
     defaults = configparser.RawConfigParser(data.pop('DEFAULT', {}))
-    parser = configparser.RawConfigParser()
+    parser = configparser.RawConfigParser(strict=strict)
     parser.optionxform = partial(to_text, errors='surrogate_or_strict')
     for section, items in data.items():
         parser.add_section(section)
