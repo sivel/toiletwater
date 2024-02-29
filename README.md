@@ -15,6 +15,7 @@ This repo is an Ansible collection containing some of my own Ansible plugins tha
 * `to_toml` - Convert hash/map/dict to TOML format
 * `from_toml` - Convert TOML to hash/map/dict
 * `jq` - Parse JSON using `jq`
+* `passlib_hash` - Hash passwords using `passlib`
 
 ### Modules
 
