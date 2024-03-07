@@ -7,7 +7,6 @@ from __future__ import annotations
 import contextlib
 
 from ansible.errors import AnsibleFilterError
-from ansible.module_utils.common.text.converters import to_text
 
 PASSLIB_E = None
 HAS_PASSLIB = False
@@ -28,7 +27,7 @@ def _is_password_hash(name):
 
 
 def do_passlib_hash(secret, hashtype='sha512', salt=None, salt_size=None,
-               rounds=None, ident=None, **kwargs):
+                    rounds=None, ident=None, **kwargs):
     if not HAS_PASSLIB:
         raise AnsibleFilterError(
             'python passlib required for passlib filter',
