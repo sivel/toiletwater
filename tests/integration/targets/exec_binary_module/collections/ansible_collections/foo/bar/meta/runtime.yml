@@ -1,0 +1,4 @@
+plugin_routing:
+  modules:
+    helloworld:
+      action_plugin: sivel.toiletwater.exec_binary_module

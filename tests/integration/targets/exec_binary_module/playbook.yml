@@ -1,0 +1,56 @@
+- hosts: localhost
+  gather_subset:
+    - '!min'
+    - platform
+  vars:
+    _arch_map:
+      x86_64: amd64
+    _ansible_system: '{{ ansible_facts.system|lower }}'
+    _ansible_arch: '{{ _arch_map.get(ansible_facts.architecture, ansible_facts.architecture) }}'
+  tasks:
+    - foo.bar.helloworld:
+        name: sivel
+      register: result
+
+    - sivel.toiletwater.exec_binary_module:
+        module: foo.bar.helloworld
+      register: result2
+
+    - sivel.toiletwater.exec_binary_module:
+        module: foo.bar.helloworld
+        arch: auto
+        system: auto
+      register: result3
+
+    - sivel.toiletwater.exec_binary_module:
+        module: foo.bar.helloworld
+        arch: '{{ _ansible_arch }}'
+      register: result4
+
+    - sivel.toiletwater.exec_binary_module:
+        module: foo.bar.helloworld
+        system: '{{ _ansible_system }}'
+      register: result5
+
+    - sivel.toiletwater.exec_binary_module:
+        module: foo.bar.helloworld
+        system: foo
+        arch: bar
+      register: result6
+      ignore_errors: true
+
+    - assert:
+        that:
+          - result.msg == 'Hello, sivel!'
+          - result._system == _ansible_system
+          - result._architecture == _ansible_arch
+          - result._module == 'foo.bar.helloworld_{_ansible_system}_{_ansible_arch}'.format(_ansible_system=_ansible_system, _ansible_arch=_ansible_arch)
+
+          - result6 is failed
+          - result6.msg == 'Could not find a binary module implementation of foo.bar.helloworld for foo bar.'
+
+- hosts: localhost
+  gather_facts: false
+  tasks:
+    - foo.bar.helloworld:
+      name: sivel

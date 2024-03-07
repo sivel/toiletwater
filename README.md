@@ -19,6 +19,10 @@ This repo is an Ansible collection containing some of my own Ansible plugins tha
 
 ### Modules
 
+#### utilities
+
+* `exec_binary_module` - A proxy action, to execute binary modules
+
 #### net_tools
 
 * `speedtest` - Tests internet bandwidth using speedtest.net
@@ -39,3 +43,28 @@ This repo is an Ansible collection containing some of my own Ansible plugins tha
 ### Inventory
 
 * `cprofile` - Noop inventory plugin used to enable cProfile as early as possible
+
+## exec_binary_module
+
+Generally speaking, most users should not even know they are interacting with `exec_binary_module`, but instead should be using the name of an underlying binary module implementation.
+
+To achieve this, requires a small addition to a collections `meta/runtime.yml`:
+
+```yaml
+  plugin_routing:
+    modules:
+      helloworld:
+        action_plugin: sivel.toiletwater.exec_binary_module
+      another_module:
+        action_plugin: sivel.toiletwater.exec_binary_module
+```
+
+At which point, with modules named something like `helloworld_linux_amd64` a user would only have to do the following:
+
+```yaml
+- namespace.name.helloworld:
+    name: sivel
+
+- namespace.name.another_module:
+    some_argument: true
+```
