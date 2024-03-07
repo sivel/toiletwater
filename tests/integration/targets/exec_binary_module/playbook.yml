@@ -1,4 +1,4 @@
-- hosts: localhost
+- hosts: testhost
   gather_subset:
     - '!min'
     - platform
@@ -12,31 +12,31 @@
         name: sivel
       register: result
 
+    - foo.bar.helloworld:
+        name: sivel
+      delegate_to: localhost
+
     - sivel.toiletwater.exec_binary_module:
         module: foo.bar.helloworld
-      register: result2
 
     - sivel.toiletwater.exec_binary_module:
         module: foo.bar.helloworld
         arch: auto
         system: auto
-      register: result3
 
     - sivel.toiletwater.exec_binary_module:
         module: foo.bar.helloworld
         arch: '{{ _ansible_arch }}'
-      register: result4
 
     - sivel.toiletwater.exec_binary_module:
         module: foo.bar.helloworld
         system: '{{ _ansible_system }}'
-      register: result5
 
     - sivel.toiletwater.exec_binary_module:
         module: foo.bar.helloworld
         system: foo
         arch: bar
-      register: result6
+      register: result2
       ignore_errors: true
 
     - assert:
@@ -46,11 +46,11 @@
           - result._architecture == _ansible_arch
           - result._module == 'foo.bar.helloworld_{_ansible_system}_{_ansible_arch}'.format(_ansible_system=_ansible_system, _ansible_arch=_ansible_arch)
 
-          - result6 is failed
-          - result6.msg == 'Could not find a binary module implementation of foo.bar.helloworld for foo bar.'
+          - result2 is failed
+          - result2.msg == 'Could not find a binary module implementation of foo.bar.helloworld for foo bar.'
 
-- hosts: localhost
+- hosts: testhost
   gather_facts: false
   tasks:
     - foo.bar.helloworld:
-      name: sivel
+        name: sivel

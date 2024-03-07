@@ -66,18 +66,30 @@ class ActionModule(ActionBase):
 
         return result
 
+    def _template_with_locals(self, template, template_locals):
+        temp_vars = ChainMap(
+            template_locals,
+            templar.available_variables
+        )
+        set_temporary_context = self._templar.set_temporary_context
+        with set_temporary_context(available_variables=temp_vars) as templar:
+            return templar.template(template)
+
     def _determine_auto(self, task_vars):
         conf = None
         try:
             if dt := self._task.delegate_to:
-                conf = self._templar.template({
-                    'system': (
-                        "{{hostvars[%r].ansible_facts.system}}" % dt
-                    ),
-                    'architecture': (
-                        "{{hostvars[%r].ansible_facts.architecture}}" % dt
-                    ),
-                })
+                conf = _template_with_locals(
+                    {
+                        'system': (
+                            "{{hostvars[__dt].ansible_facts.system}}"
+                        ),
+                        'architecture': (
+                            "{{hostvars[__dt].ansible_facts.architecture}}"
+                        ),
+                    },
+                    {'__dt': dt},
+                )
             else:
                 conf = self._templar.template({
                     'system': '{{ansible_facts.system}}',
