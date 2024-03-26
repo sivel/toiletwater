@@ -5,6 +5,8 @@
 
 from __future__ import annotations
 
+from collections import ChainMap
+
 from ansible.errors import AnsibleError
 from ansible.plugins.action import ActionBase
 from ansible.utils.display import Display
@@ -69,7 +71,7 @@ class ActionModule(ActionBase):
     def _template_with_locals(self, template, template_locals):
         temp_vars = ChainMap(
             template_locals,
-            templar.available_variables
+            self._templar.available_variables
         )
         set_temporary_context = self._templar.set_temporary_context
         with set_temporary_context(available_variables=temp_vars) as templar:
@@ -79,7 +81,7 @@ class ActionModule(ActionBase):
         conf = None
         try:
             if dt := self._task.delegate_to:
-                conf = _template_with_locals(
+                conf = self._template_with_locals(
                     {
                         'system': (
                             "{{hostvars[__dt].ansible_facts.system}}"
